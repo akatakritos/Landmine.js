@@ -20,7 +20,7 @@ module.exports = function(grunt){
 			},
 			dist: {
 				files: {
-					'dist/landmine.min.js': ['<%= concat.game.dest %>']
+					'dist/landmine.min.js': ['<%= concat.landmine.dest %>']
 				}
 			}
 		},

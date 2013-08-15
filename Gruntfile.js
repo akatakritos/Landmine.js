@@ -3,11 +3,13 @@ module.exports = function(grunt){
 
 		concat: {
 			options: {
-				separator: ';'
+				separator: ';\n\n'
 			},
 			landmine: {
 				src: [
 					'src/intro.js',
+					'src/utils.js',
+					'src/minefield.js',
 					'src/outro.js'
 				],
 				dest: 'dist/landmine.js'

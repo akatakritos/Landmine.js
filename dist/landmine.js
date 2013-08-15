@@ -73,25 +73,70 @@ var MineField = function( options ) {
 	for( var i = 0; i < this.width; i++) {
 		this.field[i] = Array(this.height);
 		for( var j = 0; j < this.height; j++ ) {
-			//this.field[i][j] = new FieldSpot();
+			this.field[i][j] = new FieldLocation();
 		}
 	}
 };
 
 MineField.prototype.get = function(x,y) {
-	if (x > width) { 
-		throw "x is out of bounds";
-	}
-	if ( y > height ) {
-		throw "y is out of bounds";
+	if (! this.isInRange(x,y) ) {
+		throw 'position out of range';
 	}
 
 	return this.field[x][y];
 };
 
+var minefieldNeighborDeltas = [
+	{x:-1,y:-1},
+	{x:-1,y:0},
+	{x:-1,y:1},
+	{x:0,y:-1},
+	{x:0,y:1},
+	{x:1,y:-1},
+	{x:1,y:0},
+	{x:1,y:1}
+];
+
+MineField.prototype.getNeighbors = function(x, y) {
+	var neighbors = [];
+	for (var i = 0, len = minefieldNeighborDeltas.length; i < len; i++) {
+		var delta = minefieldNeighborDeltas[i];
+		var dx = x + delta.x, dy = y + delta.y;
+
+		if ( this.isInRange( dx, dy ) ) {
+			neighbors.push( this.get(dx, dy) );
+		}
+	}
+
+	return neighbors;
+
+};
+
+MineField.prototype.isInRange = function( x, y ) {
+	return (x >= 0 && x < this.width && y >= 0 && y < this.height);
+};
+
 
 exportSymbol('MineField', MineField);
 ;
+
+var FieldLocation = function() {
+	this.hasMine = false;
+	this.count = 0;
+	this.dug = false;
+};
+
+FieldLocation.prototype.dig = function() {
+	if (this.hasMine) {
+		throw "exploded";
+	}
+
+	this.dug = true;
+};
+
+FieldLocation.prototype.placeMine = function() {
+	this.hasMine = true;
+};;
 
 
 	/**

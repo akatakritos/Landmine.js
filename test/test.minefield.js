@@ -30,5 +30,34 @@ describe('minefield', function(){
 				field.get(1, 1000);
 			});
 		});
+
+		it ('should return a valid value', function() {
+			var v = field.get(1, 1);
+			assert( v );
+		});
+	});
+
+	describe('getNeighbors', function() {
+		var field = new LM.MineField();
+
+		it( 'should return 8 elements from the middle', function() {
+			var neighbors = field.getNeighbors( 5, 5);
+			assert.equal(8, neighbors.length);
+		});
+
+		it ('should return 5 elements from the side', function() {
+			var neighbors = field.getNeighbors( 0, 5);
+			assert.equal(5, neighbors.length);
+		});
+
+		it ('should return 5 elements from the top', function() {
+			var neighbors = field.getNeighbors( 5, 0);
+			assert.equal(5, neighbors.length);
+		});
+
+		it ('should return 3 elements from the corner', function() {
+			var neighbors = field.getNeighbors( 0, 0);
+			assert.equal(3, neighbors.length);
+		});
 	});
 });

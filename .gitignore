@@ -1,0 +1,5 @@
+node_modules
+dist/game.js
+dist/game.min.js
+dist/simulation.js
+dist/simulation.min.js

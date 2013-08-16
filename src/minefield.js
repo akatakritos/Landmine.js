@@ -60,5 +60,34 @@ MineField.prototype.isInRange = function( x, y ) {
 	return (x >= 0 && x < this.width && y >= 0 && y < this.height);
 };
 
+MineField.prototype.countMines = function( x, y ) {
+	var neighbors = this.getNeighbors(x, y),
+		count = 0;
+
+	for (var i = neighbors.length - 1; i >= 0; i--) {
+		if (neighbors[i].hasMine) {
+			count++;
+		}
+	}
+
+	return count;
+};
+
+MineField.prototype.forEach = function(callback) {
+	var i = 0, j = 0, w = this.width, l = this.l;
+
+	for( i = 0; i < w; i++ ) {
+		for( j = 0; j < h; j++ ) {
+			callback(this.get(i, j), i, j);
+		}
+	}
+};
+
+MineField.prototype.countAllMines = function() {
+	var self = this;
+	this.forEach(function( spot, x, y ) {
+		spot.count = self.countMines(x, y);
+	});
+};
 
 exportSymbol('MineField', MineField);

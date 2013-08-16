@@ -60,4 +60,28 @@ describe('minefield', function(){
 			assert.equal(3, neighbors.length);
 		});
 	});
+
+	describe('countMines', function() {
+		var field = new LM.MineField();
+		field.get(5, 5).placeMine();
+
+		it('should record 1', function() {
+			var count = field.countMines(4, 5);
+			assert.equal(1, count);
+		});
+
+		it('should record 8', function() {
+			field.get(9, 9).placeMine();
+			field.get(9, 10).placeMine();
+			field.get(9, 11).placeMine();
+			field.get(10, 9).placeMine();
+			field.get(10, 11).placeMine();
+			field.get(11, 9).placeMine();
+			field.get(11, 10).placeMine();
+			field.get(11, 11).placeMine();
+
+			var count = field.countMines(10,10);
+			assert.equal(8, count);
+		});
+	});
 });

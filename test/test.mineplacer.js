@@ -9,7 +9,7 @@ describe('mineplacer', function() {
 				height:10
 			});
 			var placer = new LM.MinePlacer();
-			placer.placeMines(field, 10);
+			placer.placeMines(field, (field.width-1)*field.height);
 			for(var y = 0; y < field.height; y++) {
 				assert(!field.get(0, y).hasMine);
 			}
@@ -20,7 +20,7 @@ describe('mineplacer', function() {
 		it('should throw if its impossible to place all mines', function() {
 			var field = new LM.MineField({
 				width: 5,
-			    	height: 5
+				height: 6
 			});
 			var placer = new LM.MinePlacer();
 			assert.throws(function() {

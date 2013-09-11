@@ -32,7 +32,7 @@ MinePlacer.prototype.randomLocation = function( field ) {
 };
 
 MinePlacer.prototype.totalPlacableMines = function( field ) {
-	return (field.height-1)*field.width;
+	return (field.width-1)*field.height;
 };
 
 exportTestSymbol('MinePlacer', MinePlacer);

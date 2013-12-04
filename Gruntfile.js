@@ -12,6 +12,7 @@ module.exports = function(grunt){
 					'src/minefield.js',
 					'src/fieldlocation.js',
 					'src/mineplacer.js',
+					'src/cursor.js',
 					'src/outro.js'
 				],
 				dest: 'dist/landmine.js'

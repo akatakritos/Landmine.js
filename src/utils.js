@@ -4,23 +4,23 @@
  * @return {Object}          conglomeration of all object properties
  */
 var extend = function( objectsN ) {
-	var destination = {};
-	var i = 0;
-	var length = arguments.length;
-	var prop;
-	var src;
+  var destination = {};
+  var i = 0;
+  var length = arguments.length;
+  var prop;
+  var src;
 
-	for ( i = 0; i < length; i++ ) {
-		src = arguments[i];
-		for( prop in src ) {
+  for ( i = 0; i < length; i++ ) {
+    src = arguments[i];
+    for( prop in src ) {
 
-			if (src[prop] !== undefined) {
-				destination[prop] = src[prop];
-			}
-		}
-	}
+      if (src[prop] !== undefined) {
+        destination[prop] = src[prop];
+      }
+    }
+  }
 
-	return destination;
+  return destination;
 };
 
 /**
@@ -29,9 +29,9 @@ var extend = function( objectsN ) {
  * @param  {Object} value the value of the symbol
  */
 var exportSymbol = function( name, value ) {
-	if ( ! LM[name] ) {
-		LM[name] = value;
-	}
+  if ( ! LM[name] ) {
+    LM[name] = value;
+  }
 };
 
 /**
@@ -40,9 +40,9 @@ var exportSymbol = function( name, value ) {
  * @param  {Object} value symbol value
  */
 var exportTestSymbol = function( name, value ) {
-	if( ! LM[name] && module && module.exports ) {
-		LM[name] = value;
-	}
+  if( ! LM[name] && module && module.exports ) {
+    LM[name] = value;
+  }
 };
 
 

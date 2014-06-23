@@ -51,5 +51,35 @@ describe("Cursor", function() {
         assert.equal(9, c.x);
       });
     });
+
+    describe('moveUp', function() {
+      it ('decrements the y coordinate', function() {
+        var c = instance(1,1);
+        c.moveUp();
+        assert.equal(0, c.y);
+      });
+
+      it ('doesnt move past the top edge', function() {
+        var c = instance(0,0);
+        c.moveUp();
+        assert.equal(0, c.y);
+      });
+    });
+
+    describe('moveDown', function() {
+      it ('increments the y coordinate', function() {
+        var c = instance(0,0);
+        c.moveDown();
+        assert.equal(1, c.y);
+      });
+
+      it ('doesnt move past the bottom edge', function() {
+        var c = instance(0, 9, 10, 10);
+        c.moveDown();
+        assert.equal(9, c.y);
+      });
+    });
+
+
   });
 });

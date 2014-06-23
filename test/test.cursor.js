@@ -1,5 +1,6 @@
 var assert = require("assert");
-var LM = require("../dist/landmine.js");
+var Cursor = require('../src/cursor');
+var MineField = require('../src/minefield');
 
 function instance(x, y, width, height) {
   x = x || 0;
@@ -7,7 +8,7 @@ function instance(x, y, width, height) {
   width = width || 10;
   height = height || 10;
 
-  return new LM.Cursor(x, y, new LM.MineField({
+  return new Cursor(x, y, new MineField({
     width: width,
     height: height
   }));
@@ -16,7 +17,7 @@ function instance(x, y, width, height) {
 describe("Cursor", function() {
   describe('Constructor', function() {
     it('sets the x and y', function() {
-      var cursor = new LM.Cursor(1, 2);
+      var cursor = new Cursor(1, 2);
       assert.equal(1, cursor.x);
       assert.equal(2, cursor.y);
     });

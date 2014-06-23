@@ -1,23 +1,23 @@
 var assert = require('assert');
-var LM = require('../dist/landmine.js');
+var MineField = require('../src/minefield');
 
 describe('minefield', function(){
   describe('construction', function() {
     it ('should have expected properties', function() {
-      var field = new LM.MineField();
+      var field = new MineField();
       assert( field.width );
       assert( field.height );
     });
 
     it( 'should copy options', function() {
-      var field = new LM.MineField({width: 100, height: 200});
+      var field = new MineField({width: 100, height: 200});
       assert.equal(100, field.width);
       assert.equal(200, field.height);
     });
   });
 
   describe('get', function() {
-    var field = new LM.MineField();
+    var field = new MineField();
 
     it( 'should throw when x is out of bounds', function() {
       assert.throws(function() {
@@ -38,7 +38,7 @@ describe('minefield', function(){
   });
 
   describe('getNeighbors', function() {
-    var field = new LM.MineField();
+    var field = new MineField();
 
     it( 'should return 8 elements from the middle', function() {
       var neighbors = field.getNeighbors( 5, 5);
@@ -62,7 +62,7 @@ describe('minefield', function(){
   });
 
   describe('countMines', function() {
-    var field = new LM.MineField();
+    var field = new MineField();
     field.get(5, 5).placeMine();
 
     it('should record 1', function() {

@@ -23,27 +23,7 @@ var extend = function( objectsN ) {
   return destination;
 };
 
-/**
- * Export a symbol to the namespace property
- * @param  {string} name  the name of the symbol
- * @param  {Object} value the value of the symbol
- */
-var exportSymbol = function( name, value ) {
-  if ( ! LM[name] ) {
-    LM[name] = value;
-  }
+module.exports = {
+  extend: extend
 };
 
-/**
- * Export a symbol only in test environments
- * @param  {string} name  symbol name
- * @param  {Object} value symbol value
- */
-var exportTestSymbol = function( name, value ) {
-  if( ! LM[name] && typeof module !== 'undefined' && module.exports ) {
-    LM[name] = value;
-  }
-};
-
-
-exportTestSymbol('extend', extend);

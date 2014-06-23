@@ -35,4 +35,4 @@ MinePlacer.prototype.totalPlacableMines = function( field ) {
   return (field.width-1)*field.height;
 };
 
-exportTestSymbol('MinePlacer', MinePlacer);
+module.exports = MinePlacer;

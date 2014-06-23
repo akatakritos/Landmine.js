@@ -1,19 +1,15 @@
 module.exports = function(grunt){
   grunt.initConfig({
 
-    concat: {
-      options: {
-        separator: ';\n\n'
-      },
-      landmine: {
+    browserify: {
+      dist: {
         src: [
-          'src/intro.js',
           'src/utils.js',
           'src/minefield.js',
           'src/fieldlocation.js',
           'src/mineplacer.js',
           'src/cursor.js',
-          'src/outro.js'
+          'src/namespace.js'
         ],
         dest: 'dist/landmine.js'
       }
@@ -25,7 +21,7 @@ module.exports = function(grunt){
       },
       dist: {
         files: {
-          'dist/landmine.min.js': ['<%= concat.landmine.dest %>']
+          'dist/landmine.min.js': ['<%= browserify.dist.dest %>']
         }
       }
     },
@@ -53,16 +49,16 @@ module.exports = function(grunt){
     },
     watch: {
       files: ['<%= jshint.files %>', 'test/*.js'],
-      tasks: ['jshint', 'concat', 'mochaTest']
+      tasks: ['jshint', 'browserify', 'uglify', 'mochaTest']
       }
     });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.loadNpmTasks('grunt-browserify');
 
-  grunt.registerTask('default', ['jshint', 'concat', 'mochaTest', 'uglify']);
-  grunt.registerTask('test', ['jshint', 'concat', 'mochaTest']);
+  grunt.registerTask('default', ['jshint', 'browserify', 'mochaTest', 'uglify']);
+  grunt.registerTask('test', ['jshint', 'browserify', 'mochaTest']);
 };

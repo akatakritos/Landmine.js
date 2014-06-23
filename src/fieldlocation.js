@@ -15,3 +15,5 @@ FieldLocation.prototype.dig = function() {
 FieldLocation.prototype.placeMine = function() {
   this.hasMine = true;
 };
+
+module.exports = FieldLocation;

@@ -27,4 +27,4 @@ Cursor.prototype.tryMoveDelta = function(xDelta, yDelta) {
   }
 };
 
-exportTestSymbol("Cursor", Cursor);
+module.exports = Cursor;

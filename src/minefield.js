@@ -1,3 +1,6 @@
+var extend = require('./utils').extend;
+var FieldLocation = require('./fieldlocation');
+
 var MineField = function( options ) {
   if ( typeof options === 'undefined' ) {
     options = {};
@@ -90,4 +93,4 @@ MineField.prototype.countAllMines = function() {
   });
 };
 
-exportSymbol('MineField', MineField);
+module.exports = MineField;

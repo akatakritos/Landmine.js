@@ -1,4 +1,4 @@
 (function() {
-	"use strict";
-	/* namespace object */
-	var LM = {};
+  "use strict";
+  /* namespace object */
+  var LM = {};

@@ -3,6 +3,7 @@
   "description": "Landmine Game in JS/Canvas",
   "author": "Matt Burke <burkemd1+github@gmail.com",
   "version": "0.1.0",
+  "private": true,
   "dependencies": {
   },
   "devDependencies": {

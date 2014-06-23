@@ -40,7 +40,7 @@ var exportSymbol = function( name, value ) {
  * @param  {Object} value symbol value
  */
 var exportTestSymbol = function( name, value ) {
-  if( ! LM[name] && module && module.exports ) {
+  if( ! LM[name] && typeof module !== 'undefined' && module.exports ) {
     LM[name] = value;
   }
 };

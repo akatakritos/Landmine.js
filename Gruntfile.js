@@ -49,7 +49,7 @@ module.exports = function(grunt){
     },
     watch: {
       files: ['<%= jshint.files %>', 'test/*.js'],
-      tasks: ['jshint', 'browserify', 'uglify', 'mochaTest']
+      tasks: ['jshint', 'mochaTest', 'browserify', 'uglify']
       }
     });
 

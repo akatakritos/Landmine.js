@@ -1,7 +1,7 @@
 var FieldLocation = function() {
   this.hasMine = false;
-  this.count = 0;
   this.dug = false;
+  this.flagged = false;
 };
 
 FieldLocation.prototype.dig = function() {
@@ -10,6 +10,10 @@ FieldLocation.prototype.dig = function() {
   }
 
   this.dug = true;
+};
+
+FieldLocation.prototype.flag = function() {
+  this.flagged = true;
 };
 
 FieldLocation.prototype.placeMine = function() {

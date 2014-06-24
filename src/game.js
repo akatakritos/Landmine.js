@@ -98,6 +98,11 @@ Game.prototype.bindEvents = function() {
     self.draw();
   });
 
+  dispatcher.on('flag', function() {
+    self.field.get(self.cursor.x, self.cursor.y).flag();
+    self.draw();
+  });
+
 };
 
 

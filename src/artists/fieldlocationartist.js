@@ -26,14 +26,34 @@ var FieldLocationArtist = function(options) {
 FieldLocationArtist.prototype.draw = function(location, x, y) {
   //this._drawBorder(x, y);
   if (!location.dug) {
+
+    if (location.flagged) {
+      this._drawFlag(x, y);
+    } else {
       this._drawDirt(x, y);
+    }
+
   } else {
+
     var mineCount = this.field.countMines(x, y);
     if (mineCount > 0) {
       this._drawCount(x, y, mineCount);
     }
+
   }
 
+};
+
+FieldLocationArtist.prototype._drawFlag = function(x, y) {
+  var center = utils.squareCenter(x * this.size, y * this.size, this.size);
+  var ctx = this.context;
+
+  ctx.fillStyle    = 'red';
+  ctx.font         = font(this.size);
+  ctx.textAlign    = 'center';
+  ctx.textBaseline = 'middle';
+
+  ctx.fillText("F", center.x, center.y);
 };
 
 FieldLocationArtist.prototype._drawDirt = function(x, y) {

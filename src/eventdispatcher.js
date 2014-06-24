@@ -3,7 +3,8 @@ var eventMap = {
   38 : "move:up",      //up arrow
   39 : "move:right",   //right arrow
   40 : "move:down",    //down arrow
-  32 : "dig"           //spacebar
+  32 : "dig",          //spacebar
+  88 : "flag"          //x
 };
 var EventDispatcher = function(element) {
   this.handlers = {};

@@ -5,12 +5,10 @@ var dirtOffsets = [
   { x: 0.7, y: 0.7 }];
 
 var FieldLocationArtist = function(options) {
-  utils.requireOptions(options, 'context', 'minefield', 'canvasSize');
+  utils.requireOptions(options, 'context', 'metrics');
   this.context = options.context;
-  this.minefield = options.minefield;
-  this.canvasSize = options.canvasSize;
 
-  this.size = Math.min(this.canvasSize.width, this.canvasSize.height) / Math.max(this.minefield.width, this.minefield.height);
+  this.size = options.metrics.locationSize;
 };
 
 FieldLocationArtist.prototype.draw = function(location, x, y) {

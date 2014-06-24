@@ -1,5 +1,7 @@
 var MineField = require('./minefield');
 var FieldLocationArtist = require('./artists/fieldlocationartist');
+var CursorArtist = require('./artists/cursorartist');
+var CanvasMetrics = require('./artists/canvasmetrics');
 
 var Game = function(options) {
   if (typeof options === 'undefined') {
@@ -19,10 +21,23 @@ var Game = function(options) {
     height: 12
   });
 
-  this.locationArtist = new FieldLocationArtist({
-    minefield: this.field,
+  this.metrics = new CanvasMetrics({
     canvasSize: this.canvasSize,
+    fieldSize: this.field
+  });
+
+  this.locationArtist = new FieldLocationArtist({
+    metrics: this.metrics,
     context: this.context
+  });
+
+
+  console.log(this.metrics);
+
+  this.cursorArtist = new CursorArtist({
+    canvasSize: this.canvasSize,
+    context: this.context,
+    minefield: this.field
   });
 };
 

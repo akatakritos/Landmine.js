@@ -1,21 +1,39 @@
 var utils = require('../utils');
+
+
+var countColor = function(count) {
+  return "blue";
+};
+
+var font = function(size) {
+  var pxSize = size;
+  return "bold " + pxSize + "px Arial";
+};
+
 var dirtOffsets = [
   { x: 0.6, y: 0.2 },
   { x: 0.3, y: 0.6 },
   { x: 0.7, y: 0.7 }];
 
 var FieldLocationArtist = function(options) {
-  utils.requireOptions(options, 'context', 'metrics');
-  this.context = options.context;
+  utils.requireOptions(options, 'context', 'metrics', 'field');
 
+  this.context = options.context;
+  this.field = options.field;
   this.size = options.metrics.locationSize;
 };
 
 FieldLocationArtist.prototype.draw = function(location, x, y) {
   //this._drawBorder(x, y);
   if (!location.dug) {
-    this._drawDirt(x, y);
+      this._drawDirt(x, y);
+  } else {
+    var mineCount = this.field.countMines(x, y);
+    if (mineCount > 0) {
+      this._drawCount(x, y, mineCount);
+    }
   }
+
 };
 
 FieldLocationArtist.prototype._drawDirt = function(x, y) {
@@ -36,6 +54,19 @@ FieldLocationArtist.prototype._drawDirtBox = function(x, y, offset) {
   ctx.fillStyle = 'black';
   ctx.fill();
 };
+
+FieldLocationArtist.prototype._drawCount = function(x, y, count) {
+  var center = utils.squareCenter(x * this.size, y * this.size, this.size);
+  var ctx = this.context;
+
+  ctx.fillStyle    = countColor(count);
+  ctx.font         = font(this.size);
+  ctx.textAlign    = 'center';
+  ctx.textBaseline = 'middle';
+
+  ctx.fillText(count, center.x, center.y);
+};
+
 
 FieldLocationArtist.prototype._drawBorder = function(x, y) {
   var ctx = this.context;

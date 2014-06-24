@@ -4,6 +4,7 @@ var CursorArtist = require('./artists/cursorartist');
 var CanvasMetrics = require('./artists/canvasmetrics');
 var Cursor = require('./cursor');
 var EventDispatcher = require('./eventdispatcher');
+var MinePlacer = require('./mineplacer');
 
 var Game = function(options) {
   if (typeof options === 'undefined') {
@@ -32,7 +33,8 @@ var Game = function(options) {
 
   this.locationArtist = new FieldLocationArtist({
     metrics: this.metrics,
-    context: this.context
+    context: this.context,
+    field:   this.field
   });
 
   this.cursorArtist = new CursorArtist({

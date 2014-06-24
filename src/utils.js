@@ -23,7 +23,17 @@ var extend = function( objectsN ) {
   return destination;
 };
 
+var requireOptions = function(options) {
+  var requiredOptions = Array.prototype.slice.call(arguments, 1);
+  requiredOptions.forEach(function(requiredOption) {
+    if (typeof options[requiredOption] === 'undefined') {
+      throw new Error(requiredOption + " is a required option");
+    }
+  });
+};
+
 module.exports = {
-  extend: extend
+  extend: extend,
+  requireOptions: requireOptions
 };
 

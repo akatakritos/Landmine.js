@@ -1,18 +1,11 @@
+var utils = require('../utils');
 var dirtOffsets = [
   { x: 0.6, y: 0.2 },
   { x: 0.3, y: 0.6 },
   { x: 0.7, y: 0.7 }];
 
-var forceOptions = function(options) {
-  ["context", "minefield", "canvasSize"].forEach(function(requiredOption) {
-    if (typeof options[requiredOption] === 'undefined') {
-      throw new Error(requiredOption + " is a required option.");
-    }
-  });
-};
-
 var FieldLocationArtist = function(options) {
-  forceOptions(options);
+  utils.requireOptions(options, 'context', 'minefield', 'canvasSize');
   this.context = options.context;
   this.minefield = options.minefield;
   this.canvasSize = options.canvasSize;

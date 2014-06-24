@@ -1,5 +1,6 @@
 var assert = require('assert');
-var extend = require('../src/utils').extend;
+var utils = require('../src/utils');
+var extend = utils.extend;
 
 describe('utils', function() {
   describe('extend', function() {
@@ -32,4 +33,23 @@ describe('utils', function() {
       assert.equal(dest.a, src2.a);
     });
   });
+
+  describe('requireOptions', function() {
+    it('throws when an option is missing', function() {
+      options = {a: 1, b: 2};
+
+      assert.throws(function() {
+        utils.requireOptions(options, 'a', 'b', 'c');
+      }, /required/);
+    });
+
+    it('doesnt throw when all options are provided', function() {
+      options = {a: 1, b: 1};
+      assert.doesNotThrow(function() {
+        utils.requireOptions(options, 'a', 'b');
+      });
+    });
+
+  });
+
 });

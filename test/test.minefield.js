@@ -84,5 +84,26 @@ describe('minefield', function(){
       assert.equal(8, count);
     });
   });
+
+  describe('forEach', function() {
+    it('should iterate over all spots', function() {
+      var w = 5;
+      var h = 6;
+      var size = w * h;
+      var count = 0;
+
+      var field = new MineField({
+        width: w,
+        height: h
+      });
+
+      field.forEach(function(spot, x, y) {
+        count = count + 1;
+      });
+
+      assert.equal(size, count);
+    });
+  });
+
 });
 

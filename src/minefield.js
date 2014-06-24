@@ -77,7 +77,7 @@ MineField.prototype.countMines = function( x, y ) {
 };
 
 MineField.prototype.forEach = function(callback) {
-  var i = 0, j = 0, w = this.width, l = this.l;
+  var i = 0, j = 0, w = this.width, h = this.height;
 
   for( i = 0; i < w; i++ ) {
     for( j = 0; j < h; j++ ) {

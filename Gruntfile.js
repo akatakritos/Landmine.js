@@ -3,14 +3,7 @@ module.exports = function(grunt){
 
     browserify: {
       dist: {
-        src: [
-          'src/utils.js',
-          'src/minefield.js',
-          'src/fieldlocation.js',
-          'src/mineplacer.js',
-          'src/cursor.js',
-          'src/exports.js'
-        ],
+        src: 'src/**/*.js',
         dest: 'dist/landmine.js'
       }
     },

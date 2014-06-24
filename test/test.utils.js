@@ -52,4 +52,12 @@ describe('utils', function() {
 
   });
 
+  describe('squareCenter', function() {
+    it('gives the center location for a x, y, and size', function() {
+      var center = utils.squareCenter(10, 10, 10);
+      assert.equal(15, center.x);
+      assert.equal(15, center.y);
+    });
+  });
+
 });

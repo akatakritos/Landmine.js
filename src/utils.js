@@ -32,8 +32,16 @@ var requireOptions = function(options) {
   });
 };
 
+var squareCenter = function(x, y, size) {
+  return {
+    x: x + size / 2,
+    y: y + size / 2
+  };
+};
+
 module.exports = {
   extend: extend,
-  requireOptions: requireOptions
+  requireOptions: requireOptions,
+  squareCenter: squareCenter
 };
 

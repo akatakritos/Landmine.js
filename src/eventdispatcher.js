@@ -1,8 +1,9 @@
 var eventMap = {
-  37 : "move:left",
-  38 : "move:up",
-  39 : "move:right",
-  40 : "move:down"
+  37 : "move:left",    //left arrow
+  38 : "move:up",      //up arrow
+  39 : "move:right",   //right arrow
+  40 : "move:down",    //down arrow
+  32 : "dig"           //spacebar
 };
 var EventDispatcher = function(element) {
   this.handlers = {};

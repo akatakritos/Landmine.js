@@ -13,7 +13,9 @@ var FieldLocationArtist = function(options) {
 
 FieldLocationArtist.prototype.draw = function(location, x, y) {
   //this._drawBorder(x, y);
-  this._drawDirt(x, y);
+  if (!location.dug) {
+    this._drawDirt(x, y);
+  }
 };
 
 FieldLocationArtist.prototype._drawDirt = function(x, y) {

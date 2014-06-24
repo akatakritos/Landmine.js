@@ -88,6 +88,11 @@ Game.prototype.bindEvents = function() {
     self.draw();
   });
 
+  dispatcher.on('dig', function() {
+    self.field.get(self.cursor.x, self.cursor.y).dig();
+    self.draw();
+  });
+
 };
 
 

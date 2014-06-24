@@ -32,17 +32,22 @@ module.exports = function(grunt){
       }
     },
     mochaTest: {
-      test: {
+      tdd: {
         options: {
-          reporter: 'spec',
           growl : true
+        },
+        src: ['test/**/*.js']
+      },
+      build: {
+        options: {
+          reporter: 'spec'
         },
         src: ['test/**/*.js']
       }
     },
     watch: {
       files: ['<%= jshint.files %>', 'test/*.js'],
-      tasks: ['jshint', 'mochaTest', 'browserify', 'uglify']
+      tasks: ['jshint', 'mochaTest:tdd', 'browserify', 'uglify']
       }
     });
 
@@ -52,6 +57,6 @@ module.exports = function(grunt){
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-browserify');
 
-  grunt.registerTask('default', ['jshint', 'browserify', 'mochaTest', 'uglify']);
-  grunt.registerTask('test', ['jshint', 'browserify', 'mochaTest']);
+  grunt.registerTask('default', ['jshint', 'mochaTest:build', 'browserify', 'uglify']);
+  grunt.registerTask('test', ['jshint', 'mochaTest:build']);
 };

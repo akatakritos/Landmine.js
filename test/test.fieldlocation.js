@@ -67,6 +67,12 @@ describe('FieldLocation', function() {
       assert.equal(true, f.flagged);
     });
 
+    it('sets flagged back to false if flagged again', function() {
+      f.flag();
+      f.flag();
+      assert(f.flagged === false, "the location should be flagged");
+    });
+
     it('doesnt do anything if already dug', function() {
       f.dig();
       f.flag();

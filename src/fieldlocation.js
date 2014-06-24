@@ -17,9 +17,12 @@ FieldLocation.prototype.dig = function() {
 };
 
 FieldLocation.prototype.flag = function() {
-  if (!this.dug) {
-    this.flagged = true;
+  if (this.dug) {
+    return;
   }
+
+  //toggle
+  this.flagged = !this.flagged;
 };
 
 FieldLocation.prototype.placeMine = function() {

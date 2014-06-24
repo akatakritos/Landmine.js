@@ -13,7 +13,9 @@ FieldLocation.prototype.dig = function() {
 };
 
 FieldLocation.prototype.flag = function() {
-  this.flagged = true;
+  if (!this.dug) {
+    this.flagged = true;
+  }
 };
 
 FieldLocation.prototype.placeMine = function() {

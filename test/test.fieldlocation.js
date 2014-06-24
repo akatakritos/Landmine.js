@@ -59,6 +59,12 @@ describe('FieldLocation', function() {
         f.flag();
         assert.equal(true, f.flagged);
       });
+
+      it('doesnt do anything if already dug', function() {
+        f.dig();
+        f.flag();
+        assert(f.flagged === false);
+      });
     });
 
     describe('mining', function() {

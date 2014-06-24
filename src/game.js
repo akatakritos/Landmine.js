@@ -31,13 +31,9 @@ var Game = function(options) {
     context: this.context
   });
 
-
-  console.log(this.metrics);
-
   this.cursorArtist = new CursorArtist({
-    canvasSize: this.canvasSize,
     context: this.context,
-    minefield: this.field
+    metrics: this.metrics
   });
 };
 
@@ -46,6 +42,8 @@ Game.prototype.draw = function() {
   this.field.forEach(function(location, x, y) {
     self.locationArtist.draw(location, x, y);
   });
+
+  this.cursorArtist.draw(1, 2);
 };
 
 Game.prototype.start = function() {

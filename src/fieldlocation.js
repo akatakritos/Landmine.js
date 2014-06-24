@@ -9,6 +9,10 @@ FieldLocation.prototype.dig = function() {
     throw "exploded";
   }
 
+  if (this.flagged) {
+    return;
+  }
+
   this.dug = true;
 };
 

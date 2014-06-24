@@ -44,6 +44,12 @@ describe('FieldLocation', function() {
         f.dig();
       });
     });
+
+    it('does nothing if the spot is flagged', function() {
+      f.flag();
+      f.dig();
+      assert(f.dug === false);
+    });
   });
 
   describe('flagging', function() {

@@ -42,6 +42,9 @@ var Game = function(options) {
 
   this.cursor = new Cursor(0, 0, this.field);
 
+  var miner = new MinePlacer();
+  miner.placeMines(this.field, 20);
+
   this.bindEvents();
 };
 

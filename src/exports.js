@@ -1,5 +1,5 @@
 var Landmine = window.Landmine || {};
 
-Landmine.MinePlacer = require('./mineplacer');
+Landmine.Game = require('./game');
 
 window.Landmine = Landmine;

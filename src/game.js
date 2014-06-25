@@ -22,8 +22,8 @@ var Game = function(options) {
   };
 
   this.field = new MineField({
-    width: 15,
-    height: 12
+    width: 14,
+    height: 10
   });
 
   this.metrics = new CanvasMetrics({

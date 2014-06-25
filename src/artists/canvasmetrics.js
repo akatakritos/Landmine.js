@@ -7,6 +7,7 @@ var calculateLocationSize = function(canvasSize, fieldSize) {
 var CanvasMetrics = function(options) {
   utils.requireOptions(options, 'canvasSize', 'fieldSize');
 
+  this.statusBarHeight = options.statusBarHeight || 0;
   this.canvasSize = options.canvasSize;
   this.fieldSize  = options.fieldSize;
   this.locationSize = calculateLocationSize(this.canvasSize, this.fieldSize);
@@ -15,7 +16,7 @@ var CanvasMetrics = function(options) {
 CanvasMetrics.prototype.locationToPoint = function(x, y) {
   return {
     x: x * this.locationSize,
-    y: y * this.locationSize
+    y: y * this.locationSize + this.statusBarHeight
   };
 };
 

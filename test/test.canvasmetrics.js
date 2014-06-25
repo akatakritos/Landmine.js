@@ -54,5 +54,20 @@ describe("CanvasMetrics", function() {
     });
   });
 
+  describe('with statusBarHeight', function() {
+    beforeEach(function() {
+      metrics = new CanvasMetrics({
+        canvasSize: { width: 150, height: 100 },
+        fieldSize:  { width: 15,  height: 10  },
+        statusBarHeight: 10
+      });
+    });
+
+    it('yields 0, 10 for top left', function() {
+      var pt = metrics.locationToPoint(0,0);
+      assert.equal(0, pt.x);
+      assert.equal(10, pt.y);
+    });
+  });
 
 });

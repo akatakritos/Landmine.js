@@ -42,6 +42,15 @@ CanvasMetrics.prototype.applyScaledOffsetsToCenter = function(center, offsetX, o
   };
 };
 
+CanvasMetrics.prototype.locationRect = function(x, y) {
+  var upperLeft = this.locationToPoint(x, y);
+  return {
+    x: upperLeft.x,
+    y: upperLeft.y,
+    width: this.locationSize,
+    height: this.locationSize
+  };
+};
 
 CanvasMetrics.prototype.scaleScalar = function(scale) {
   return this.locationSize * scale;

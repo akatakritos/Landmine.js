@@ -29,7 +29,7 @@ var Game = function(options) {
   this.metrics = new CanvasMetrics({
     canvasSize: this.canvasSize,
     fieldSize: this.field,
-    statusBarHeight: 20
+    statusBar: true
   });
 
   this.locationArtist = new FieldLocationArtist({

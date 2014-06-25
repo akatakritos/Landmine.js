@@ -18,6 +18,10 @@ Timer.prototype.fire = function(event) {
 };
 
 Timer.prototype.start = function() {
+  if (this._intervalId) {
+    throw new Error("Timer already started!");
+  }
+
   var self = this;
   this._intervalId = setInterval(function() {
     self.fire('tick');
@@ -26,6 +30,7 @@ Timer.prototype.start = function() {
 
 Timer.prototype.stop = function() {
   clearTimeout(this._intervalId);
+  this._intervalId = null;
 };
 
 module.exports = Timer;

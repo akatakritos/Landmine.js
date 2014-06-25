@@ -15,6 +15,20 @@ var dirtOffsets = [
   { x: 0.3, y: 0.6 },
   { x: 0.7, y: 0.7 }];
 
+var starOffsets = [
+  { x: -0.13333333333333333, y: -0.8666666666666667 },
+  { x: 0.06666666666666667,  y: -0.3333333333333333 },
+  { x: 0.26666666666666666,  y: -0.6666666666666666 },
+  { x: 0.26666666666666666,  y: -0.2 },
+  { x: 0.6666666666666666,   y: 0.26666666666666666 },
+  { x: 0.13333333333333333,  y: 0.06666666666666667 },
+  { x: 0.4666666666666667,   y: 0.7333333333333333 },
+  { x: -0.13333333333333333, y: 0.13333333333333333 },
+  { x: -0.4666666666666667,  y: 0.6 },
+  { x: -0.4,                 y: 0 },
+  { x: -0.7333333333333333,  y: -0.4666666666666667 },
+  { x: -0.4,                 y: -0.3333333333333333 } ];
+
 var flagRects = [
   {
     color: 'red',
@@ -48,13 +62,20 @@ var FieldLocationArtist = function(options) {
 
 FieldLocationArtist.prototype.draw = function(location, x, y) {
   //this._drawBorder(x, y);
+
+  if (location.detonated) {
+    this._drawStar(x, y);
+    return;
+  }
+
+  if (location.flagged) {
+    this._drawFlag(x, y);
+    return;
+  }
+
   if (!location.dug) {
 
-    if (location.flagged) {
-      this._drawFlag(x, y);
-    } else {
-      this._drawDirt(x, y);
-    }
+    this._drawDirt(x, y);
 
   } else {
 
@@ -98,6 +119,41 @@ FieldLocationArtist.prototype._drawCount = function(x, y, count) {
   ctx.fillText(count, center.x, center.y);
 };
 
+FieldLocationArtist.prototype._drawStar = function(x, y) {
+
+  var ctx = this.context;
+  var center = utils.squareCenter(x * this.size, y * this.size, this.size);
+
+  ctx.beginPath();
+  var pt = this._starOffsetToPoint(center, 0);
+  ctx.moveTo(pt.x, pt.y);
+  console.log(pt);
+
+  for(var i = 1; i < starOffsets.length; i++) {
+    pt = this._starOffsetToPoint(center, i);
+    ctx.lineTo(pt.x, pt.y);
+    console.log(pt);
+  }
+
+  ctx.closePath();
+  ctx.fillStyle = 'yellow';
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.beginPath();
+  var r = (1/15)*(this.size);
+  ctx.arc(center.x, center.y, r, 0, 2*Math.PI, false);
+  ctx.fillStyle='red';
+  ctx.fill();
+  ctx.stroke();
+};
+
+FieldLocationArtist.prototype._starOffsetToPoint = function(center, starPointIndex) {
+  return {
+    x: center.x + starOffsets[starPointIndex].x * (this.size / 2),
+    y: center.y + starOffsets[starPointIndex].y * (this.size / 2)
+  };
+};
 
 FieldLocationArtist.prototype._drawFlag = function(x, y) {
   var center = utils.squareCenter(x * this.size, y * this.size, this.size, this.size);

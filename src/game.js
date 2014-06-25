@@ -94,7 +94,14 @@ Game.prototype.bindEvents = function() {
   });
 
   dispatcher.on('dig', function() {
-    self.field.get(self.cursor.x, self.cursor.y).dig();
+    var spot = self.field.get(self.cursor.x, self.cursor.y);
+
+    if (spot.hasMine) {
+      self.field.detonateMines();
+    } else {
+      spot.dig();
+    }
+
     self.draw();
   });
 

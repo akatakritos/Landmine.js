@@ -54,12 +54,12 @@ describe("CanvasMetrics", function() {
     });
   });
 
-  describe('with statusBarHeight', function() {
+  describe('with statusBar', function() {
     beforeEach(function() {
       metrics = new CanvasMetrics({
-        canvasSize: { width: 150, height: 100 },
+        canvasSize: { width: 150, height: 110 }, //needs an extra 10 height to leave room for status bar
         fieldSize:  { width: 15,  height: 10  },
-        statusBarHeight: 10
+        statusBar: true
       });
     });
 

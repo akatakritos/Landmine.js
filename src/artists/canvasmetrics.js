@@ -1,18 +1,27 @@
 var utils = require('../utils');
 
-var calculateLocationSize = function(canvasSize, fieldSize) {
-  return Math.floor(Math.min(canvasSize.width / fieldSize.width, canvasSize.height / fieldSize.height));
-};
 
 var CanvasMetrics = function(options) {
   utils.requireOptions(options, 'canvasSize', 'fieldSize');
 
-  this.statusBarHeight = options.statusBarHeight || 0;
+
+  this.statusBarHeight = 0;
+  this.statusBar  = !!options.statusBar;
   this.canvasSize = options.canvasSize;
   this.fieldSize  = options.fieldSize;
-  this.locationSize = calculateLocationSize(this.canvasSize, this.fieldSize);
+  this.locationSize = this.calculateLocationSize(this.canvasSize, this.fieldSize);
+
+  if (options.statusBar) {
+    this.statusBarHeight = this.locationSize;
+  }
 };
 
+CanvasMetrics.prototype.calculateLocationSize = function(canvasSize, fieldSize) {
+  //if we have a status bar, we need to allow one extra locations height
+  var fieldHeight = this.statusBar ? fieldSize.height + 1 : fieldSize.height;
+
+  return Math.floor(Math.min(canvasSize.width / fieldSize.width, canvasSize.height / fieldHeight));
+};
 CanvasMetrics.prototype.locationToPoint = function(x, y) {
   return {
     x: x * this.locationSize,

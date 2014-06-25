@@ -127,7 +127,6 @@ FieldLocationArtist.prototype._drawStar = function(x, y) {
   ctx.beginPath();
   var pt = this._starOffsetToPoint(center, 0);
   ctx.moveTo(pt.x, pt.y);
-  console.log(pt);
 
   for(var i = 1; i < starOffsets.length; i++) {
     pt = this._starOffsetToPoint(center, i);
@@ -140,6 +139,7 @@ FieldLocationArtist.prototype._drawStar = function(x, y) {
   ctx.fill();
   ctx.stroke();
 
+  //center
   ctx.beginPath();
   var r = (1/15)*(this.size);
   ctx.arc(center.x, center.y, r, 0, 2*Math.PI, false);

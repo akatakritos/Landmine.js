@@ -70,5 +70,16 @@ CanvasMetrics.prototype.locationFontSize = function() {
   return this.locationSize;
 };
 
+CanvasMetrics.prototype.statusBarCenter = function() {
+  return {
+    x: this.fieldSize.width * this.locationSize / 2,
+    y: this.statusBarHeight / 2
+  };
+};
+
+CanvasMetrics.prototype.statusBarFontSize = function() {
+  return this.scaleScalar(0.75);
+};
+
 module.exports = CanvasMetrics;
 

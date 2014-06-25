@@ -2,6 +2,7 @@ var FieldLocation = function() {
   this.hasMine = false;
   this.dug = false;
   this.flagged = false;
+  this.detonated = false;
 };
 
 FieldLocation.prototype.dig = function() {
@@ -27,6 +28,12 @@ FieldLocation.prototype.flag = function() {
 
 FieldLocation.prototype.placeMine = function() {
   this.hasMine = true;
+};
+
+FieldLocation.prototype.detonate = function() {
+  if (this.hasMine) {
+    this.detonated = true;
+  }
 };
 
 module.exports = FieldLocation;

@@ -96,5 +96,29 @@ describe('FieldLocation', function() {
     });
   });
 
+  describe('detonating', function() {
+    var f;
+    beforeEach(function() {
+      f = new FieldLocation();
+    });
+
+    it('has a default value of false', function() {
+      assert(f.detonated === false);
+    });
+
+    it('sets the detonated field to true when you detonate the mine', function() {
+      f.placeMine();
+      f.detonate();
+      assert(f.detonated === true);
+    });
+
+    it('is a no-op if you detonate a place without a mine', function() {
+      assert(f.hasMine === false);
+      f.detonate();
+      assert(f.detonated === false);
+    });
+
+  });
+
 
 });

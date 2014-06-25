@@ -105,5 +105,23 @@ describe('minefield', function(){
     });
   });
 
+  describe('detonateMines', function() {
+    it('detonates all locations with mines', function() {
+      var field = new MineField({
+        width: 2,
+        height: 2
+      });
+
+      field.get(0,0).placeMine();
+      field.get(1,1).placeMine();
+
+      field.detonateMines();
+      assert(field.get(0,0).detonated === true);
+      assert(field.get(1,1).detonated === true);
+      assert(field.get(0,1).detonated === false);
+      assert(field.get(1,0).detonated === false);
+    });
+  });
+
 });
 

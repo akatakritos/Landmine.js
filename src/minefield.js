@@ -93,4 +93,10 @@ MineField.prototype.countAllMines = function() {
   });
 };
 
+MineField.prototype.detonateMines = function() {
+  this.forEach(function(spot, x, y) {
+    spot.detonate();
+  });
+};
+
 module.exports = MineField;

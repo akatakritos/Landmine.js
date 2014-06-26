@@ -105,5 +105,18 @@ CanvasMetrics.prototype.statusBarCorner = function(which) {
   }
 };
 
+CanvasMetrics.prototype.promptRectangle = function() {
+  return {
+    x: this.canvasSize.width * 0.25,
+    y: this.canvasSize.height * 0.25,
+    width: this.canvasSize.width * 0.50,
+    height: this.canvasSize.height * 0.50
+  };
+};
+
+CanvasMetrics.prototype.promptFontSize = function() {
+  return this.statusBarFontSize();
+};
+
 module.exports = CanvasMetrics;
 

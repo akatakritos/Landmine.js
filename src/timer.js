@@ -1,7 +1,7 @@
 var Timer = function(interval) {
   this.interval = interval;
   this.eventHandlers = {};
-  this.lastStart = 0;
+  this.lastTick = 0;
 };
 
 Timer.prototype.on = function(event, handler) {
@@ -27,6 +27,7 @@ Timer.prototype.start = function() {
   this.lastTick = Date.now();
   this._intervalId = setInterval(function() {
     self.fire('tick', Date.now() - self.lastTick);
+    self.lastTick = Date.now();
   }, this.interval);
 };
 

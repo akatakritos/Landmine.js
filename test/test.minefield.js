@@ -105,23 +105,49 @@ describe('minefield', function(){
     });
   });
 
-  describe('detonateMines', function() {
-    it('detonates all locations with mines', function() {
-      var field = new MineField({
+  describe('mine operations', function() {
+    var field;
+    beforeEach(function() {
+      field = new MineField({
         width: 2,
         height: 2
       });
 
       field.get(0,0).placeMine();
       field.get(1,1).placeMine();
+    });
 
-      field.detonateMines();
-      assert(field.get(0,0).detonated === true);
-      assert(field.get(1,1).detonated === true);
-      assert(field.get(0,1).detonated === false);
-      assert(field.get(1,0).detonated === false);
+    describe('detonateMines', function() {
+      it('detonates all locations with mines', function() {
+        field.detonateMines();
+
+        assert(field.get(0,0).detonated === true);
+        assert(field.get(1,1).detonated === true);
+        assert(field.get(0,1).detonated === false);
+        assert(field.get(1,0).detonated === false);
+      });
+    });
+
+    describe('flagAllMines', function() {
+      it('flags all locations with mines', function() {
+        field.flagAllMines();
+
+        assert(field.get(0,0).flagged === true);
+        assert(field.get(1,1).flagged === true);
+        assert(field.get(0,1).flagged === false);
+        assert(field.get(1,0).flagged === false);
+      });
+
+      it('doesnnt unflag an already flagged spot', function() {
+        field.get(0,0).flag();
+        field.flagAllMines();
+
+        assert(field.get(0,0).flagged === true);
+        assert(field.get(1,1).flagged === true);
+      });
     });
   });
+
 
 });
 

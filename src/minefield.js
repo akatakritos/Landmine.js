@@ -99,4 +99,12 @@ MineField.prototype.detonateMines = function() {
   });
 };
 
+MineField.prototype.flagAllMines = function() {
+  this.forEach(function(spot, x, y) {
+    if (spot.hasMine && !spot.flagged) {
+      spot.flag();
+    }
+  });
+};
+
 module.exports = MineField;

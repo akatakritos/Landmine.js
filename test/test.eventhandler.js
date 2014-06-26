@@ -63,5 +63,11 @@ describe('EventHandler', function() {
       assert.equal(3, c);
     });
 
+    it('it doesnt blow up when firing a non-registeed event', function() {
+      assert.doesNotThrow(function() {
+        instance.fire('nobody-registered');
+      });
+    });
+
   });
 });

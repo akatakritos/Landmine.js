@@ -2,14 +2,29 @@ var MinePlacer = require('./mineplacer');
 var utils = require('./utils');
 
 var Level = function(options) {
-  utils.requireOptions(options, 'field', 'levelNumber');
-  this.field = options.field;
-  this.levelNumber = options.levelNumber;
+  utils.requireOptions(options, 'game');
+
+  var game = options.game;
+  this.field = game.field;
+  this.levelNumber = 1;
   this.spacesCleared = 0;
   this.flags = 0;
 
   var miner = new MinePlacer();
   miner.placeMines(this.field, this.mines());
+
+  var self = this;
+  game.on('dig:safe', function() {
+    self.dig();
+  });
+
+  game.on('flag:added', function() {
+    self.flag();
+  });
+
+  game.on('flag:removed', function() {
+    self.unflag();
+  });
 };
 
 Level.prototype.mines = function() {

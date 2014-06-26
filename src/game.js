@@ -16,8 +16,7 @@ var Game = function(options) {
   this.cursor = new Cursor(0, 0, this.field);
 
   this.level = new Level({
-    field: this.field,
-    levelNumber: 1
+    game: this,
   });
 
   this.score = new Score(this);
@@ -85,9 +84,7 @@ Game.prototype.bindEvents = function(dispatcher) {
       self.field.detonateMines();
       self.fire('detonated');
     } else {
-      var dug = spot.dig();
-      self.level.dig();
-      if (dug) {
+      if (spot.dig()) {
         self.fire('dig:safe');
       }
     }
@@ -107,10 +104,8 @@ Game.prototype.bindEvents = function(dispatcher) {
     spot.flag();
 
     if (spot.flagged) {
-      self.level.flag();
       self.fire('flag:added');
     } else {
-      self.level.unflag();
       self.fire('flag:removed');
     }
 

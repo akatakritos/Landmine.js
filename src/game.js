@@ -21,6 +21,7 @@ var Game = function(options) {
   });
 
   this.score = new Score(this);
+  this.state = 'pre-game';
 
   this.bindEvents(options.eventDispatcher);
 };
@@ -32,30 +33,52 @@ Game.prototype.start = function() {
   this.fire('invalidated');
 };
 
+Game.prototype.canPlay = function() {
+  return this.state !== 'between-levels' && this.state !== 'pre-game';
+};
 
 Game.prototype.bindEvents = function(dispatcher) {
   var self = this;
+
+  dispatcher.on('confirm', function() {
+    if (self.state === 'pre-game') {
+      self.state = "playing";
+      self.fire('level:started');
+      self.fire('invalidated');
+    }
+  });
+
   dispatcher.on('move:left', function() {
+    if (!self.canPlay()) { return; }
+
     self.cursor.moveLeft();
     self.fire('invalidated');
   });
 
   dispatcher.on('move:right', function() {
+    if (!self.canPlay()) { return; }
+
     self.cursor.moveRight();
     self.fire('invalidated');
   });
 
   dispatcher.on('move:up', function() {
+    if (!self.canPlay()) { return; }
+
     self.cursor.moveUp();
     self.fire('invalidated');
   });
 
   dispatcher.on('move:down', function() {
+    if (!self.canPlay()) { return; }
+
     self.cursor.moveDown();
     self.fire('invalidated');
   });
 
   dispatcher.on('dig', function() {
+    if (!self.canPlay()) { return; }
+
     var spot = self.field.get(self.cursor.x, self.cursor.y);
 
     if (spot.hasMine) {
@@ -69,12 +92,14 @@ Game.prototype.bindEvents = function(dispatcher) {
       }
     }
 
-    self.fire('invalidated');
+
     if (self.level.finished()) {
       self.field.flagAllMines();
+      self.state = 'between-levels';
       self.fire('level:finished');
-      alert("YAY!");
     }
+
+    self.fire('invalidated');
   });
 
   dispatcher.on('flag', function() {

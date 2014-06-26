@@ -5,7 +5,8 @@ var eventMap = {
   39 : "move:right",   //right arrow
   40 : "move:down",    //down arrow
   16 : "dig",          //shift
-  90 : "flag"          //z
+  90 : "flag",         //z
+  13 : "confirm"       //enter
 };
 var EventDispatcher = function(element) {
   this.handlers = {};

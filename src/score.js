@@ -17,7 +17,12 @@ var Score = function(game) {
 
   game.on('level:finished', function() {
     self.score += self.timeBonusRemaining();
+    self.timer.stop();
+  });
+
+  game.on('level:started', function() {
     self.resetLevel();
+    self.timer.start();
   });
 
   game.on('detonated', function() {
@@ -26,7 +31,6 @@ var Score = function(game) {
 
   game.on('started', function() {
     self.resetGame();
-    self.timer.start();
   });
 };
 

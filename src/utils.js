@@ -33,15 +33,20 @@ var requireOptions = function(options) {
 };
 
 var squareCenter = function(x, y, size) {
+  return rectangleCenter(x, y, size, size);
+};
+
+var rectangleCenter = function( x, y, width, height) {
   return {
-    x: x + size / 2,
-    y: y + size / 2
+    x: x + width / 2,
+    y: y + height / 2
   };
 };
 
 module.exports = {
   extend: extend,
   requireOptions: requireOptions,
-  squareCenter: squareCenter
+  squareCenter: squareCenter,
+  rectangleCenter: rectangleCenter
 };
 

@@ -4,7 +4,8 @@ var CursorArtist = require('./artists/cursorartist');
 var CanvasMetrics = require('./artists/canvasmetrics');
 var Cursor = require('./cursor');
 var EventDispatcher = require('./eventdispatcher');
-var MinePlacer = require('./mineplacer');
+var StatusBarArtist = require('./artists/statusbarartist');
+var Level = require('./level');
 
 var Game = function(options) {
   if (typeof options === 'undefined') {
@@ -43,10 +44,18 @@ var Game = function(options) {
     metrics: this.metrics
   });
 
+  this.statusBarArtist = new StatusBarArtist({
+    context: this.context,
+    metrics: this.metrics
+  });
+
   this.cursor = new Cursor(0, 0, this.field);
 
-  var miner = new MinePlacer();
-  miner.placeMines(this.field, 20);
+
+  this.level = new Level({
+    field: this.field,
+    levelNumber: 1
+  });
 
   this.bindEvents();
 };
@@ -61,6 +70,12 @@ Game.prototype.draw = function() {
   });
 
   this.cursorArtist.draw(this.cursor.x, this.cursor.y);
+  this.statusBarArtist.draw({
+    timeRemaining: 180,
+    minesRemaining: this.level.minesRemaining(),
+    score: 0,
+    level: this.level.levelNumber
+  });
 };
 
 Game.prototype.start = function() {
@@ -101,13 +116,25 @@ Game.prototype.bindEvents = function() {
       self.field.detonateMines();
     } else {
       spot.dig();
+      self.level.dig();
     }
 
     self.draw();
+    if (self.level.finished()) {
+      alert("YAY!");
+    }
   });
 
   dispatcher.on('flag', function() {
-    self.field.get(self.cursor.x, self.cursor.y).flag();
+    var spot = self.field.get(self.cursor.x, self.cursor.y);
+    spot.flag();
+
+    if (spot.flagged) {
+      self.level.flag();
+    } else {
+      self.level.unflag();
+    }
+
     self.draw();
   });
 

@@ -54,17 +54,42 @@ GameArtist.prototype.draw = function() {
     self.locationArtist.draw(location, x, y);
   });
 
-  this.cursorArtist.draw(game.cursor.x, game.cursor.y);
-
   this.statusBarArtist.draw({
     timeRemaining: game.score.timeBonusRemaining(),
     minesRemaining: game.level.minesRemaining(),
     score: game.score.current(),
     level: game.level.levelNumber
   });
+
+  if (this.game.state === 'pre-game' || this.game.state == 'between-levels') {
+    this._drawStartPrompt();
+  } else {
+    this.cursorArtist.draw(game.cursor.x, game.cursor.y);
+  }
 };
 
 GameArtist.prototype.clear = function() {
   this.context.clearRect(0, 0, this.canvasSize.width, this.canvasSize.height);
+};
+
+GameArtist.prototype._drawStartPrompt = function() {
+  this._drawPrompt('Press Enter to Start');
+};
+
+GameArtist.prototype._drawPrompt = function(prompt) {
+  var rect = this.metrics.promptRectangle();
+  var ctx = this.context;
+
+  ctx.clearRect(rect.x, rect.y, rect.width, rect.height);
+  ctx.beginPath();
+  ctx.rect(rect.x, rect.y, rect.width, rect.height);
+  ctx.stroke();
+
+  var fontSize = this.metrics.promptFontSize();
+  var center = utils.rectangleCenter(rect.x, rect.y, rect.width, rect.height);
+  ctx.font = "" + fontSize + "px Arial";
+  ctx.textBaseline = 'middle';
+  ctx.textAlign = 'center';
+  ctx.fillText(prompt, center.x, center.y);
 };
 module.exports = GameArtist;

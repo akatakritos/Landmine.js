@@ -11,8 +11,9 @@
     </div>
 
     <script type='text/javascript'>
-      var game = new Landmine.Game();
-      game.start();
+      Landmine.start({
+        canvas: document.getElementById('landmine'),
+      });
     </script>
   </body>
 </html>

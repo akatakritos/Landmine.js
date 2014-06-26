@@ -1,12 +1,12 @@
 var utils = require('../utils');
 
-var TimerArtist = function(options) {
+var StatusBarArtist = function(options) {
   utils.requireOptions(options, 'metrics', 'context');
   this.metrics = options.metrics;
   this.context = options.context;
 };
 
-TimerArtist.prototype.draw = function(timeRemaining) {
+StatusBarArtist.prototype.draw = function(timeRemaining) {
   var ctx = this.context;
   var pt = this.metrics.statusBarCenter();
   ctx.fillStyle = 'black';
@@ -17,9 +17,9 @@ TimerArtist.prototype.draw = function(timeRemaining) {
 
 };
 
-TimerArtist.prototype.font = function() {
+StatusBarArtist.prototype.font = function() {
   var fontSize = this.metrics.statusBarFontSize();
   return "" + fontSize + "px Arial";
 };
 
-module.exports = TimerArtist;
+module.exports = StatusBarArtist;

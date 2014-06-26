@@ -6,6 +6,8 @@ var Cursor = require('./cursor');
 var EventDispatcher = require('./eventdispatcher');
 var StatusBarArtist = require('./artists/statusbarartist');
 var Level = require('./level');
+var EventHandler = require('./eventhandler');
+var Score = require('./score');
 
 var Game = function(options) {
   if (typeof options === 'undefined') {
@@ -57,8 +59,12 @@ var Game = function(options) {
     levelNumber: 1
   });
 
+  this.score = new Score(this);
+
   this.bindEvents();
 };
+
+EventHandler.extend(Game);
 
 Game.prototype.draw = function() {
   var self = this;
@@ -71,15 +77,16 @@ Game.prototype.draw = function() {
 
   this.cursorArtist.draw(this.cursor.x, this.cursor.y);
   this.statusBarArtist.draw({
-    timeRemaining: 180,
+    timeRemaining: this.score.timeBonusRemaining(),
     minesRemaining: this.level.minesRemaining(),
-    score: 0,
+    score: this.score.current(),
     level: this.level.levelNumber
   });
 };
 
 Game.prototype.start = function() {
   this.draw();
+  this.fire('started');
 };
 
 Game.prototype.clear = function() {
@@ -114,14 +121,17 @@ Game.prototype.bindEvents = function() {
 
     if (spot.hasMine) {
       self.field.detonateMines();
+      self.fire('detonated');
     } else {
       spot.dig();
       self.level.dig();
+      self.fire('dig:safe');
     }
 
     self.draw();
     if (self.level.finished()) {
       self.field.flagAllMines();
+      self.fire('level:finished');
       alert("YAY!");
     }
   });
@@ -132,8 +142,10 @@ Game.prototype.bindEvents = function() {
 
     if (spot.flagged) {
       self.level.flag();
+      self.fire('flag:added');
     } else {
       self.level.unflag();
+      self.fire('flag:removed');
     }
 
     self.draw();

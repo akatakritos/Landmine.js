@@ -24,9 +24,9 @@ Timer.prototype.start = function() {
   }
 
   var self = this;
-  this.lastStart = Date.now();
+  this.lastTick = Date.now();
   this._intervalId = setInterval(function() {
-    self.fire('tick', Date.now() - self.lastStart);
+    self.fire('tick', Date.now() - self.lastTick);
   }, this.interval);
 };
 

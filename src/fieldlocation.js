@@ -14,7 +14,12 @@ FieldLocation.prototype.dig = function() {
     return;
   }
 
+  if (this.dug) {
+    return false;
+  }
+
   this.dug = true;
+  return true;
 };
 
 FieldLocation.prototype.flag = function() {

@@ -123,9 +123,11 @@ Game.prototype.bindEvents = function() {
       self.field.detonateMines();
       self.fire('detonated');
     } else {
-      spot.dig();
+      var dug = spot.dig();
       self.level.dig();
-      self.fire('dig:safe');
+      if (dug) {
+        self.fire('dig:safe');
+      }
     }
 
     self.draw();

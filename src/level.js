@@ -13,7 +13,7 @@ var Level = function(options) {
 };
 
 Level.prototype.mines = function() {
-  return (this.levelNumber+1) * 4;
+  return this.levelNumber * 4;
 };
 
 Level.prototype.minesRemaining = function() {

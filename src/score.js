@@ -7,7 +7,7 @@ var Score = function(game) {
   this.timer = new Timer(1000);
   this.timer.on('tick', function(interval) {
     self.timeEllapsed += interval;
-    game.draw();
+    game.fire('invalidated');
   });
 
   var self = this;

@@ -121,6 +121,7 @@ Game.prototype.bindEvents = function() {
 
     self.draw();
     if (self.level.finished()) {
+      self.field.flagAllMines();
       alert("YAY!");
     }
   });

@@ -81,5 +81,29 @@ CanvasMetrics.prototype.statusBarFontSize = function() {
   return this.scaleScalar(0.75);
 };
 
+CanvasMetrics.prototype.statusBarCorner = function(which) {
+  if (which == "topleft") {
+
+    return {x: 0, y: 0};
+
+  } else if (which === "bottomleft") {
+
+    return {x: 0, y: this.statusBarHeight };
+
+  } else if (which === "topright" )  {
+
+    return {x: (this.fieldSize.width) * this.locationSize, y: 0 };
+
+  } else if (which === "bottomright"){
+
+    return {x: (this.fieldSize.width) * this.locationSize, y: this.statusBarHeight};
+
+  } else {
+
+    throw new Error("Unrecognized corner identifier: " + which);
+
+  }
+};
+
 module.exports = CanvasMetrics;
 

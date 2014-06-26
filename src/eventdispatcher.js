@@ -1,3 +1,4 @@
+var EventHandler = require('./eventhandler');
 var eventMap = {
   37 : "move:left",    //left arrow
   38 : "move:up",      //up arrow
@@ -21,17 +22,6 @@ var EventDispatcher = function(element) {
 
 };
 
-EventDispatcher.prototype.on = function(eventName, handler) {
-  var handleList = this.handlers[eventName] || (this.handlers[eventName] = []);
-  handleList.push(handler);
-};
-
-EventDispatcher.prototype.fire = function(eventName) {
-  if (typeof this.handlers[eventName] !== 'undefined') {
-    this.handlers[eventName].forEach(function(handler) {
-      handler();
-    });
-  }
-};
+EventHandler.extend(EventDispatcher);
 
 module.exports = EventDispatcher;

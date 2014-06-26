@@ -1,8 +1,18 @@
 var utils = require('../utils');
 
 
+var countColors = [
+  "green",
+  "blue",
+  "red",
+  "fuchsia",
+  "teal",
+  "purple",
+  "olive",
+  "navy"];
+
 var countColor = function(count) {
-  return "blue";
+  return countColors[count - 1];
 };
 
 var font = function(pxSize) {

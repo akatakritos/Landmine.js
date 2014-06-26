@@ -7,6 +7,7 @@ var Score = function(game) {
   this.timer = new Timer(1000);
   this.timer.on('tick', function(interval) {
     self.timeEllapsed += interval;
+    game.draw();
   });
 
   var self = this;
@@ -25,6 +26,7 @@ var Score = function(game) {
 
   game.on('started', function() {
     self.resetGame();
+    self.timer.start();
   });
 };
 
@@ -37,6 +39,7 @@ Score.prototype.timeBonusRemaining = function() {
 };
 
 Score.prototype._secondsEllapsed = function() {
+  return Math.floor(this.timeEllapsed / 1000);
 };
 
 Score.prototype.resetLevel = function() {

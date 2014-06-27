@@ -26,9 +26,25 @@ module.exports = function(grunt){
         globals: {
           console: true,
           module: true,
-          document: true
+          document: true,
+          describe: true,
+          it: true,
+          beforeEach: true,
+          require: true,
+          setInterval: true,
+          clearInterval: true,
+          window: true
         },
-        ignores: ['src/intro.js', 'src/outro.js']
+        ignores: ['src/intro.js', 'src/outro.js'],
+        curly: true,
+        eqeqeq: true,
+        forin: true,
+        indent: 2,
+        latedef: true,
+        newcap: true,
+        undef: true,
+        unused: true,
+        trailing: true
       }
     },
     mochaTest: {

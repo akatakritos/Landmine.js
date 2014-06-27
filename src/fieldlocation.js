@@ -7,7 +7,7 @@ var FieldLocation = function() {
 
 FieldLocation.prototype.dig = function() {
   if (this.hasMine) {
-    throw "exploded";
+    throw new Error("exploded");
   }
 
   if (this.flagged) {

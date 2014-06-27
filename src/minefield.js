@@ -27,7 +27,7 @@ var MineField = function( options ) {
 
 MineField.prototype.get = function(x,y) {
   if (! this.isInRange(x,y) ) {
-    throw 'position out of range';
+    throw new Error('position out of range (' + x + ', ' + y + ')');
   }
 
   return this.field[x][y];

@@ -3,7 +3,7 @@ var MinePlacer = function() {
 
 MinePlacer.prototype.placeMines = function( field, count ) {
   if (count > this.totalPlacableMines(field)) {
-    throw "Can't place " + count + " mines in a field sized " + field.width + "x" + field.height;
+    throw new Error("Can't place " + count + " mines in a field sized " + field.width + "x" + field.height);
   }
 
   for( var i = 0; i < count; i++ ) {

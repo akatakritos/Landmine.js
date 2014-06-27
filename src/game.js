@@ -19,7 +19,7 @@ var Game = function(options) {
     game: this,
   });
 
-  this.score = new Score(this);
+  this.score = options.scorer || new Score(this);
   this.state = 'pre-game';
 
   this.bindEvents(options.eventDispatcher);
@@ -88,7 +88,6 @@ Game.prototype.bindEvents = function(dispatcher) {
         self.fire('dig:safe');
       }
     }
-
 
     if (self.level.finished()) {
       self.field.flagAllMines();

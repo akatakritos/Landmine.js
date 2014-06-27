@@ -15,6 +15,7 @@ Landmine.start = function(options) {
     eventDispatcher: eventDispatcher
   });
 
+  //jshint unused:false
   var gameArtist = new GameArtist({
     canvas: options.canvas,
     game: game

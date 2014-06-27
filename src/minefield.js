@@ -13,12 +13,12 @@ var MineField = function( options ) {
 
   this.options = extend(defaults, options);
 
-  Object.defineProperty(this, 'width', {enumerable: true, value: this.options.width });
-  Object.defineProperty(this, 'height', {enumerable: true, value: this.options.height});
+  this.width = this.options.width;
+  this.height = this.options.height;
 
-  this.field = Array(this.width);
+  this.field = new Array(this.width);
   for( var i = 0; i < this.width; i++) {
-    this.field[i] = Array(this.height);
+    this.field[i] = new Array(this.height);
     for( var j = 0; j < this.height; j++ ) {
       this.field[i][j] = new FieldLocation();
     }
@@ -95,12 +95,16 @@ MineField.prototype.countAllMines = function() {
 
 MineField.prototype.detonateMines = function() {
   this.forEach(function(spot, x, y) {
+    //jshint unused:false
+
     spot.detonate();
   });
 };
 
 MineField.prototype.flagAllMines = function() {
   this.forEach(function(spot, x, y) {
+    //jshint unused:false
+
     if (spot.hasMine && !spot.flagged) {
       spot.flag();
     }

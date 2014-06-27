@@ -32,7 +32,7 @@ Timer.prototype.start = function() {
 };
 
 Timer.prototype.stop = function() {
-  clearTimeout(this._intervalId);
+  clearInterval(this._intervalId);
   this._intervalId = null;
 };
 

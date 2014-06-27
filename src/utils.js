@@ -3,7 +3,8 @@
  * @param  {Object} objectsN N objects to copy
  * @return {Object}          conglomeration of all object properties
  */
-var extend = function( objectsN ) {
+var extend = function( varargs ) {
+  //jshint unused:false
   var destination = {};
   var i = 0;
   var length = arguments.length;
@@ -32,16 +33,17 @@ var requireOptions = function(options) {
   });
 };
 
-var squareCenter = function(x, y, size) {
-  return rectangleCenter(x, y, size, size);
-};
-
 var rectangleCenter = function( x, y, width, height) {
   return {
     x: x + width / 2,
     y: y + height / 2
   };
 };
+
+var squareCenter = function(x, y, size) {
+  return rectangleCenter(x, y, size, size);
+};
+
 
 module.exports = {
   extend: extend,

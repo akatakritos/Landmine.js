@@ -36,7 +36,7 @@ describe('utils', function() {
 
   describe('requireOptions', function() {
     it('throws when an option is missing', function() {
-      options = {a: 1, b: 2};
+      var options = {a: 1, b: 2};
 
       assert.throws(function() {
         utils.requireOptions(options, 'a', 'b', 'c');
@@ -44,7 +44,7 @@ describe('utils', function() {
     });
 
     it('doesnt throw when all options are provided', function() {
-      options = {a: 1, b: 1};
+      var options = {a: 1, b: 1};
       assert.doesNotThrow(function() {
         utils.requireOptions(options, 'a', 'b');
       });

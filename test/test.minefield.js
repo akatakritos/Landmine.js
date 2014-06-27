@@ -98,6 +98,8 @@ describe('minefield', function(){
       });
 
       field.forEach(function(spot, x, y) {
+        //jshint unused:false
+
         count = count + 1;
       });
 

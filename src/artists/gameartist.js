@@ -61,7 +61,7 @@ GameArtist.prototype.draw = function() {
     level: game.level.levelNumber
   });
 
-  if (this.game.state === 'pre-game' || this.game.state == 'between-levels') {
+  if (this.game.state === 'pre-game' || this.game.state === 'between-levels') {
     this._drawStartPrompt();
   } else {
     this.cursorArtist.draw(game.cursor.x, game.cursor.y);

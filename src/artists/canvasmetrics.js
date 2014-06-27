@@ -82,7 +82,7 @@ CanvasMetrics.prototype.statusBarFontSize = function() {
 };
 
 CanvasMetrics.prototype.statusBarCorner = function(which) {
-  if (which == "topleft") {
+  if (which === "topleft") {
 
     return {x: 0, y: 0};
 

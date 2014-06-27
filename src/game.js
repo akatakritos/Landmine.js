@@ -30,6 +30,9 @@ EventHandler.extend(Game);
 Game.prototype.start = function() {
   this.fire('started');
   this.fire('invalidated');
+  this.state = 'pre-game';
+  this.cursor.x = 0;
+  this.cursor.y = 0;
 };
 
 Game.prototype.canPlay = function() {
@@ -54,9 +57,8 @@ Game.prototype.bindEvents = function(dispatcher) {
       self.level.moveNext();
       self.startLevel();
     } else if (self.state === 'detonated') {
-      self.state = 'pre-game';
       self.level.reset();
-      self.fire('invalidated');
+      self.start();
     }
   });
 

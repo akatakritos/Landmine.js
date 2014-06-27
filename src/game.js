@@ -33,7 +33,7 @@ Game.prototype.start = function() {
 };
 
 Game.prototype.canPlay = function() {
-  return this.state !== 'between-levels' && this.state !== 'pre-game';
+  return this.state !== 'between-levels' && this.state !== 'pre-game' && this.state !== 'detonated';
 };
 
 Game.prototype.bindEvents = function(dispatcher) {
@@ -43,6 +43,15 @@ Game.prototype.bindEvents = function(dispatcher) {
     if (self.state === 'pre-game') {
       self.state = "playing";
       self.fire('level:started');
+      self.fire('invalidated');
+    } else if (self.state === 'between-levels') {
+      self.state = 'playing';
+      self.level.moveNext();
+      self.fire('level:started');
+      self.fire('invalidated');
+    } else if (self.state === 'detonated') {
+      self.state = 'pre-game';
+      self.level.reset();
       self.fire('invalidated');
     }
   });
@@ -83,6 +92,7 @@ Game.prototype.bindEvents = function(dispatcher) {
     if (spot.hasMine) {
       self.field.detonateMines();
       self.fire('detonated');
+      self.state = 'detonated';
     } else {
       if (spot.dig()) {
         self.fire('dig:safe');

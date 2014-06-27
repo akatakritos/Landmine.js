@@ -148,6 +148,31 @@ describe('minefield', function(){
         assert(field.get(1,1).flagged === true);
       });
     });
+
+    describe('reset', function() {
+      beforeEach(function() {
+        field = new MineField({
+          width: 2,
+          height: 2
+        });
+
+        field.get(0,0).flag();
+        field.get(0,1).placeMine();
+        field.get(1,0).dig();
+
+        field.reset();
+      });
+
+
+      it('should reset all the locations', function() {
+        field.forEach(function(spot) {
+          assert(spot.flagged === false, 'spot shouldnt be flagged');
+          assert(spot.hasMine === false, 'spot shouldnt have a mine yet');
+          assert(spot.dug     === false, 'spot shoulndt be dug');
+        });
+      });
+    });
+
   });
 
 

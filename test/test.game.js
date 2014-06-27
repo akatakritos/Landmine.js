@@ -91,29 +91,37 @@ describe('Game', function() {
     });
 
     describe('multiple levels', function() {
-
-      it('cant move while between levels', function() {
+      beforeEach(function() {
         events.fire('confirm');
         helpers.digAll(game, events);
+      });
 
+      it('cant move while between levels', function() {
         assert.equal('between-levels', game.state);
         assert.notFired(game, 'move:right', function() {
           events.fire('move:right');
         });
       });
 
-      it('moves to level two after confirming between levels', function() {
-        events.fire('confirm');
-        helpers.digAll(game, events);
+      describe('starting the next level', function() {
+        beforeEach(function() {
+          assert.equal('between-levels', game.state);
+          events.fire('confirm');
+        });
 
-        assert.equal('between-levels', game.state);
+        it('moves to level two after confirming between levels', function() {
+          assert.equal('playing', game.state);
+          assert.equal(2, game.level.levelNumber);
+          assert.equal(8, game.level.minesRemaining());
+          assert(game.level.finished() === false);
+        });
 
-        events.fire('confirm');
-        assert.equal('playing', game.state);
-        assert.equal(2, game.level.levelNumber);
-        assert.equal(8, game.level.minesRemaining());
-        assert(game.level.finished() === false);
+        it('returns the cursor to the top left', function() {
+          assert.equal(0, game.cursor.x);
+          assert.equal(0, game.cursor.y);
+        });
       });
+
     });
   });
 });

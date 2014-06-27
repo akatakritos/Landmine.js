@@ -36,24 +36,26 @@ Game.prototype.canPlay = function() {
   return this.state !== 'between-levels' && this.state !== 'pre-game' && this.state !== 'detonated';
 };
 
+Game.prototype.startLevel = function() {
+  this.state = "playing";
+  this.cursor.x = 0;
+  this.cursor.y = 0;
+  this.fire('level:started');
+  this.fire('invalidated');
+};
+
 Game.prototype.bindEvents = function(dispatcher) {
   var self = this;
 
   dispatcher.on('confirm', function() {
     if (self.state === 'pre-game') {
-      self.state = "playing";
-      self.fire('level:started');
-      self.fire('invalidated');
+      self.startLevel();
     } else if (self.state === 'between-levels') {
-      self.state = 'playing';
       self.level.moveNext();
-      self.fire('level:started');
-      self.fire('invalidated');
+      self.startLevel();
     } else if (self.state === 'detonated') {
       self.state = 'pre-game';
       self.level.reset();
-      self.cursor.x = 0;
-      self.cursor.y = 0;
       self.fire('invalidated');
     }
   });

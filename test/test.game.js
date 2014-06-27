@@ -74,12 +74,19 @@ describe('Game', function() {
         });
       });
 
-      it('resets the game after confirming a loss', function() {
-        events.fire('confirm');
-        assert.equal('pre-game', game.state);
+      describe('after confirming a loss', function() {
+        beforeEach(function() {
+          events.fire('confirm');
+          events.fire('confirm'); //reset
+        });
+        it('resets the game after confirming a loss', function() {
+          assert.equal(1, game.level.levelNumber);
+        });
 
-        events.fire('confirm');
-        assert.equal(1, game.level.levelNumber);
+        it ('returns the cursor to the top left', function() {
+          assert.equal(0, game.cursor.x);
+          assert.equal(0, game.cursor.y);
+        });
       });
     });
 

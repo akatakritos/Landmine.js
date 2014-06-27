@@ -52,6 +52,8 @@ Game.prototype.bindEvents = function(dispatcher) {
     } else if (self.state === 'detonated') {
       self.state = 'pre-game';
       self.level.reset();
+      self.cursor.x = 0;
+      self.cursor.y = 0;
       self.fire('invalidated');
     }
   });

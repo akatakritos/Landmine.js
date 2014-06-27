@@ -6,12 +6,8 @@ var Level = function(options) {
 
   var game = options.game;
   this.field = game.field;
-  this.levelNumber = 1;
-  this.spacesCleared = 0;
-  this.flags = 0;
 
-  var miner = new MinePlacer();
-  miner.placeMines(this.field, this.mines());
+  this.reset();
 
   var self = this;
   game.on('dig:safe', function() {
@@ -53,6 +49,23 @@ Level.prototype.spacesRemaining = function() {
 
 Level.prototype.finished = function() {
   return this.spacesRemaining() === 0;
+};
+
+Level.prototype.reset = function() {
+  this.levelNumber = 1;
+  this.spacesCleared = 0;
+  this.flags = 0;
+
+  this.field.reset();
+
+  var miner = new MinePlacer();
+  miner.placeMines(this.field, this.mines());
+};
+
+Level.prototype.moveNext = function() {
+  this.levelNumber++;
+  this.spacesCleared = 0;
+  this.flags = 0;
 };
 
 module.exports = Level;

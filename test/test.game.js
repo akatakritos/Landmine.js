@@ -129,6 +129,25 @@ describe('Game', function() {
           assert.equal(0, game.cursor.x);
           assert.equal(0, game.cursor.y);
         });
+
+        it('has reset the field', function() {
+          game.field.forEach(function(spot) {
+            assert(spot.flagged === false, 'spots should be unflagged');
+            assert(spot.detonated === false, 'spots should be undetonated');
+            assert(spot.dug === false, 'spots should be undug');
+          });
+        });
+
+        it('should set the correct number of mines', function() {
+          var mines = 0;
+          game.field.forEach(function(spot) {
+            if (spot.hasMine) {
+              mines++;
+            }
+          });
+
+          assert.equal(game.level.mines(), mines);
+        });
       });
 
     });

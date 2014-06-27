@@ -53,19 +53,24 @@ Level.prototype.finished = function() {
 
 Level.prototype.reset = function() {
   this.levelNumber = 1;
-  this.spacesCleared = 0;
-  this.flags = 0;
-
-  this.field.reset();
-
-  var miner = new MinePlacer();
-  miner.placeMines(this.field, this.mines());
+  this.levelReset();
 };
 
 Level.prototype.moveNext = function() {
   this.levelNumber++;
+  this.levelReset();
+};
+
+Level.prototype.levelReset = function() {
   this.spacesCleared = 0;
   this.flags = 0;
+  this.setMines();
+};
+
+Level.prototype.setMines = function() {
+  this.field.reset();
+  var miner = new MinePlacer();
+  miner.placeMines(this.field, this.mines());
 };
 
 module.exports = Level;

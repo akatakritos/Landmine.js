@@ -113,9 +113,7 @@ MineField.prototype.flagAllMines = function() {
 
 MineField.prototype.reset = function() {
   this.forEach(function(spot) {
-    spot.hasMine = false;
-    spot.flagged = false;
-    spot.dug = false;
+    spot.reset();
   });
 };
 

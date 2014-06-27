@@ -159,6 +159,7 @@ describe('minefield', function(){
         field.get(0,0).flag();
         field.get(0,1).placeMine();
         field.get(1,0).dig();
+        field.get(1,1).detonated = true;
 
         field.reset();
       });
@@ -169,6 +170,7 @@ describe('minefield', function(){
           assert(spot.flagged === false, 'spot shouldnt be flagged');
           assert(spot.hasMine === false, 'spot shouldnt have a mine yet');
           assert(spot.dug     === false, 'spot shoulndt be dug');
+          assert(spot.detonated === false, 'spot shouldnt be detonated');
         });
       });
     });

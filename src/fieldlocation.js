@@ -40,5 +40,11 @@ FieldLocation.prototype.detonate = function() {
     this.detonated = true;
   }
 };
+FieldLocation.prototype.reset = function() {
+  this.hasMine = false;
+  this.flagged = false;
+  this.dug = false;
+  this.detonated = false;
+};
 
 module.exports = FieldLocation;

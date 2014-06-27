@@ -79,6 +79,7 @@ describe('Game', function() {
           events.fire('confirm');
           events.fire('confirm'); //reset
         });
+
         it('resets the game after confirming a loss', function() {
           assert.equal(1, game.level.levelNumber);
         });
@@ -86,6 +87,14 @@ describe('Game', function() {
         it ('returns the cursor to the top left', function() {
           assert.equal(0, game.cursor.x);
           assert.equal(0, game.cursor.y);
+        });
+
+        it('nothing is yet detonated or flagged', function() {
+          game.field.forEach(function(spot) {
+            assert(spot.dug === false, "the spot should not be dug");
+            assert(spot.flagged === false, "the spot should not be flagged");
+            assert(spot.detonated === false, 'the spot should not be detonated');
+          });
         });
       });
     });

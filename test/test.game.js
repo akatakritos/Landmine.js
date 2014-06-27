@@ -24,28 +24,47 @@ describe('Game', function() {
       });
     });
 
-    it('invalidates when moving', function() {
-      events.fire('confirm');
-      assert.fired(game, 'invalidated', function() {
-        events.fire('move:right');
-      });
-    });
-
-    it('fires level:finished when the level is done', function() {
-      events.fire('confirm');
-
-      assert.fired(game, 'level:finished', function() {
-        helpers.digAll(game, events);
+    describe('general gameplay', function() {
+      beforeEach(function() {
+        events.fire('confirm'); //starts the game
       });
 
-      assert.equal('between-levels', game.state);
-    });
+      it('invalidates when moving', function() {
+        assert.fired(game, 'invalidated', function() {
+          events.fire('move:right');
+        });
+      });
 
-    it('fires the detonated event', function() {
-      events.fire('confirm');
+      it('fires level:finished when the level is done', function() {
+        assert.fired(game, 'level:finished', function() {
+          helpers.digAll(game, events);
+        });
 
-      assert.fired(game, 'detonated', function() {
-        helpers.digAMine(game, events);
+        assert.equal('between-levels', game.state);
+      });
+
+      it('fires the detonated event', function() {
+        assert.fired(game, 'detonated', function() {
+          helpers.digAMine(game, events);
+        });
+      });
+
+      it ('doesnt let you dig a flagged spot', function() {
+        events.fire('flag');
+        assert.notFired(game, 'dig:safe', function() {
+          events.fire('dig');
+        });
+      });
+
+      it('doesnt let you dig a flagged mine either', function() {
+        helpers.moveToMine(game, events);
+        assert(game.field.get(game.cursor.x, game.cursor.y).hasMine === true);
+
+        events.fire('flag');
+
+        assert.notFired(game, 'detonated', function() {
+          events.fire('dig');
+        });
       });
 
     });

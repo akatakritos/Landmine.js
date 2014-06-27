@@ -36,9 +36,13 @@ GameHelpers.digAll = function(game, events) {
 };
 
 GameHelpers.digAMine = function(game, events) {
+  GameHelpers.moveToMine(game, events);
+  events.fire('dig');
+};
+
+GameHelpers.moveToMine = function(game, events) {
   iterate(game, events, function(spot) {
     if (spot.hasMine) {
-      events.fire('dig');
       return true; //quit iterating
     }
   });

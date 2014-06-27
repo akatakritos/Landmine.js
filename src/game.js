@@ -92,6 +92,9 @@ Game.prototype.bindEvents = function(dispatcher) {
     if (!self.canPlay()) { return; }
 
     var spot = self.field.get(self.cursor.x, self.cursor.y);
+    if (spot.flagged) {
+      return;
+    }
 
     if (spot.hasMine) {
       self.field.detonateMines();

@@ -3,13 +3,14 @@ var GameArtist = require('./artists/gameartist');
 var EventDispatcher = require('./eventdispatcher');
 var utils = require('./utils');
 var EventLogger = require('./eventLogger');
+var PlaybackDispatcher = require('./playbackdispatcher');
 
 var Landmine = window.Landmine || {};
 
 Landmine.start = function(options) {
   utils.requireOptions(options, 'canvas');
 
-  var eventDispatcher = new EventDispatcher(options.canvas);
+  var eventDispatcher = options.eventDispatcher || new EventDispatcher(options.canvas);
 
   var game = new Game({
     canvas: options.canvas,
@@ -29,6 +30,20 @@ Landmine.start = function(options) {
   Landmine.events = eventLogger;
 
   game.start();
+
+};
+
+Landmine.playback = function(options) {
+  utils.requireOptions(options, 'canvas', 'events');
+  var vcr = new PlaybackDispatcher({
+    events: options.events
+  });
+
+  options.eventDispatcher = vcr;
+
+  Landmine.start(options);
+
+  vcr.start();
 
 };
 

@@ -12,7 +12,9 @@ describe('Game', function() {
 
     game = new Game({
       eventDispatcher: events,
-      scorer: {}
+      scorer: {
+        current: function() { return 100; }
+      }
     });
   });
 
@@ -48,6 +50,19 @@ describe('Game', function() {
           helpers.digAMine(game, events);
         });
       });
+
+      it('fires a gameOver event and passes the score', function() {
+        var fired = false;
+        game.on('gameOver', function(data) {
+          fired = true;
+          assert(typeof data.score !== 'undefined', 'did not pass the score');
+        });
+
+        helpers.digAMine(game, events);
+
+        assert(fired === true, 'should have fired the gameOver event');
+      });
+
 
       it ('doesnt let you dig a flagged spot', function() {
         events.fire('flag');

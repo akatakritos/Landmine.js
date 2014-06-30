@@ -102,6 +102,9 @@ Game.prototype.bindEvents = function(dispatcher) {
       self.field.detonateMines();
       self.fire('detonated');
       self.state = 'detonated';
+      self.fire('gameOver', {
+        score: self.score.current()
+      });
     } else {
       if (spot.dig()) {
         self.fire('dig:safe');

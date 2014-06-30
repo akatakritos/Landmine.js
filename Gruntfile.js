@@ -33,7 +33,8 @@ module.exports = function(grunt){
           require: true,
           setInterval: true,
           clearInterval: true,
-          window: true
+          window: true,
+          setTimeout: true
         },
         ignores: ['src/intro.js', 'src/outro.js'],
         curly: true,

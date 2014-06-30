@@ -18,6 +18,7 @@ var EventDispatcher = function(element) {
   element.addEventListener('keydown', function(e) {
     if (typeof(eventMap[e.keyCode]) !== 'undefined') {
       self.fire(eventMap[e.keyCode]);
+      self.fire('any', eventMap[e.keyCode]);
     }
   });
 

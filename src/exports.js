@@ -2,6 +2,7 @@ var Game = require('./game');
 var GameArtist = require('./artists/gameartist');
 var EventDispatcher = require('./eventdispatcher');
 var utils = require('./utils');
+var EventLogger = require('./eventLogger');
 
 var Landmine = window.Landmine || {};
 
@@ -20,6 +21,12 @@ Landmine.start = function(options) {
     canvas: options.canvas,
     game: game
   });
+
+  var eventLogger = new EventLogger({
+    eventDispatcher: eventDispatcher
+  });
+
+  Landmine.events = eventLogger;
 
   game.start();
 

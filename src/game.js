@@ -122,6 +122,10 @@ Game.prototype.bindEvents = function(dispatcher) {
 
   dispatcher.on('flag', function() {
     var spot = self.field.get(self.cursor.x, self.cursor.y);
+    if (spot.dug) {
+      return;
+    }
+
     spot.flag();
 
     if (spot.flagged) {

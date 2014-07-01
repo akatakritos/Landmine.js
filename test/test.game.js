@@ -82,6 +82,16 @@ describe('Game', function() {
         });
       });
 
+      it('doesnt let you do flag operations on a dug spot', function() {
+        events.fire('dig');
+
+        assert.notFired(game, 'flag:added', function() {
+          assert.notFired(game, 'flag:removed', function() {
+            events.fire('flag');
+          });
+        });
+      });
+
     });
 
     describe('losing', function() {

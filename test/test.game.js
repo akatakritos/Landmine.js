@@ -26,6 +26,17 @@ describe('Game', function() {
       });
     });
 
+    it('disallows flagging in a pre-game', function() {
+      assert.notFired(game, 'flag:added', function() {
+        assert.notFired(game, 'flag:removed', function() {
+          assert.notFired(game, 'invalidated', function() {
+            events.fire('flag');
+            events.fire('flag'); //do it twice
+          });
+        });
+      });
+    });
+
     describe('general gameplay', function() {
       beforeEach(function() {
         events.fire('confirm'); //starts the game

@@ -121,6 +121,7 @@ Game.prototype.bindEvents = function(dispatcher) {
   });
 
   dispatcher.on('flag', function() {
+    if (!self.canPlay()) { return; }
     var spot = self.field.get(self.cursor.x, self.cursor.y);
     if (spot.dug) {
       return;

@@ -2,7 +2,7 @@ var Game = require('./game');
 var GameArtist = require('./artists/gameartist');
 var EventDispatcher = require('./eventdispatcher');
 var utils = require('./utils');
-var EventLogger = require('./eventLogger');
+var EventLogger = require('./eventlogger');
 var PlaybackDispatcher = require('./playbackdispatcher');
 
 var Landmine = window.Landmine || {};

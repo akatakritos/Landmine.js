@@ -20,6 +20,7 @@
     "tests",
     "src",
     "playground.html",
-    "Gruntfile.js"
+    "Gruntfile.js",
+    "package.json"
   ]
 }

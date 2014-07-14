@@ -1,0 +1,25 @@
+{
+  "name": "landmine.js",
+  "version": "0.0.1",
+  "authors": [
+    "Matt Burke <burkemd1+github@gmail.com>"
+  ],
+  "description": "Front End Game Code",
+  "main": "dist/landmine.js",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "homepage": "http://www.mattburkedev.com",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "src",
+    "playground.html",
+    "Gruntfile.js"
+  ]
+}

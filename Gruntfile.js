@@ -74,7 +74,8 @@ module.exports = function(grunt){
 	commitFiles: ['package.json', 'bower.json'],
 	createTag: true,
 	tagName: 'v%VERSION%',
-	tagMessage: 'Version %VERSION%'
+	tagMessage: 'Version %VERSION%',
+	push: false
       }
     }
     });

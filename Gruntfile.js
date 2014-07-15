@@ -89,4 +89,5 @@ module.exports = function(grunt){
 
   grunt.registerTask('default', ['jshint', 'mochaTest:build', 'browserify', 'uglify']);
   grunt.registerTask('test', ['jshint', 'mochaTest:build']);
+  grunt.registerTask('release', ['default', 'bump']);
 };

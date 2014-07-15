@@ -65,7 +65,18 @@ module.exports = function(grunt){
     watch: {
       files: ['<%= jshint.files %>', 'test/*.js'],
       tasks: ['jshint', 'mochaTest:tdd', 'browserify', 'uglify']
+      },
+    bump: {
+      options: {
+        files: ['package.json', 'bower.json'],
+	commit: true,
+	commitMessage: 'Release v%VERSION%',
+	commitFiles: ['package.json', 'bower.json'],
+	createTag: true,
+	tagName: 'v%VERSION%',
+	tagMessage: 'Version %VERSION%'
       }
+    }
     });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -73,6 +84,7 @@ module.exports = function(grunt){
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-browserify');
+  grunt.loadNpmTasks('grunt-bump');
 
   grunt.registerTask('default', ['jshint', 'mochaTest:build', 'browserify', 'uglify']);
   grunt.registerTask('test', ['jshint', 'mochaTest:build']);

@@ -4,14 +4,14 @@
   "author": "Matt Burke <burkemd1+github@gmail.com",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "grunt": "*",
+    "grunt-browserify": "^2.1.0",
+    "grunt-bump": "0.0.14",
     "grunt-contrib-jshint": "*",
     "grunt-contrib-uglify": "*",
     "grunt-contrib-watch": "*",
-    "grunt-mocha-test": "*",
-    "grunt-browserify": "^2.1.0"
+    "grunt-mocha-test": "*"
   }
 }

@@ -659,6 +659,8 @@ Landmine.start = function(options) {
 
   game.start();
 
+  return game;
+
 };
 
 Landmine.playback = function(options) {

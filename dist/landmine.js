@@ -122,7 +122,7 @@ CanvasMetrics.prototype.promptFontSize = function() {
 module.exports = CanvasMetrics;
 
 
-},{"../utils":17}],2:[function(require,module,exports){
+},{"../utils":19}],2:[function(require,module,exports){
 var utils = require('../utils');
 
 var CursorArtist = function(options) {
@@ -143,7 +143,7 @@ CursorArtist.prototype.draw = function(x, y) {
 
 module.exports = CursorArtist;
 
-},{"../utils":17}],3:[function(require,module,exports){
+},{"../utils":19}],3:[function(require,module,exports){
 var utils = require('../utils');
 
 
@@ -327,7 +327,7 @@ FieldLocationArtist.prototype._fillRect = function(color, x, y, w, h) {
 
 module.exports = FieldLocationArtist;
 
-},{"../utils":17}],4:[function(require,module,exports){
+},{"../utils":19}],4:[function(require,module,exports){
 var FieldLocationArtist = require('./fieldlocationartist');
 var CursorArtist = require('./cursorartist');
 var CanvasMetrics = require('./canvasmetrics');
@@ -424,7 +424,7 @@ GameArtist.prototype._drawPrompt = function(prompt) {
 };
 module.exports = GameArtist;
 
-},{"../utils":17,"./canvasmetrics":1,"./cursorartist":2,"./fieldlocationartist":3,"./statusbarartist":5}],5:[function(require,module,exports){
+},{"../utils":19,"./canvasmetrics":1,"./cursorartist":2,"./fieldlocationartist":3,"./statusbarartist":5}],5:[function(require,module,exports){
 var utils = require('../utils');
 
 var StatusBarArtist = function(options) {
@@ -507,7 +507,7 @@ StatusBarArtist.prototype.font = function() {
 
 module.exports = StatusBarArtist;
 
-},{"../utils":17}],6:[function(require,module,exports){
+},{"../utils":19}],6:[function(require,module,exports){
 var Cursor = function(x, y, field) {
   this.x = x;
   this.y = y;
@@ -560,6 +560,7 @@ var EventDispatcher = function(element) {
   element.addEventListener('keydown', function(e) {
     if (typeof(eventMap[e.keyCode]) !== 'undefined') {
       self.fire(eventMap[e.keyCode]);
+      self.fire('any', eventMap[e.keyCode]);
     }
   });
 
@@ -605,17 +606,39 @@ EventHandler.extend = function(klass) {
 module.exports = EventHandler;
 
 },{}],9:[function(require,module,exports){
+var utils = require('./utils');
+
+var EventLogger = function(options) {
+  utils.requireOptions(options, 'eventDispatcher');
+
+  this.eventDispatcher = options.eventDispatcher;
+  this.events = [];
+
+  var self = this;
+  this.eventDispatcher.on('any', function(event) {
+    self.events.push({
+      event: event,
+      time: new Date().getTime()
+    });
+  });
+};
+
+module.exports = EventLogger;
+
+},{"./utils":19}],10:[function(require,module,exports){
 var Game = require('./game');
 var GameArtist = require('./artists/gameartist');
 var EventDispatcher = require('./eventdispatcher');
 var utils = require('./utils');
+var EventLogger = require('./eventlogger');
+var PlaybackDispatcher = require('./playbackdispatcher');
 
 var Landmine = window.Landmine || {};
 
 Landmine.start = function(options) {
   utils.requireOptions(options, 'canvas');
 
-  var eventDispatcher = new EventDispatcher(options.canvas);
+  var eventDispatcher = options.eventDispatcher || new EventDispatcher(options.canvas);
 
   var game = new Game({
     canvas: options.canvas,
@@ -628,13 +651,33 @@ Landmine.start = function(options) {
     game: game
   });
 
+  var eventLogger = new EventLogger({
+    eventDispatcher: eventDispatcher
+  });
+
+  Landmine.events = eventLogger;
+
   game.start();
+
+};
+
+Landmine.playback = function(options) {
+  utils.requireOptions(options, 'canvas', 'events');
+  var vcr = new PlaybackDispatcher({
+    events: options.events
+  });
+
+  options.eventDispatcher = vcr;
+
+  Landmine.start(options);
+
+  vcr.start();
 
 };
 
 window.Landmine = Landmine;
 
-},{"./artists/gameartist":4,"./eventdispatcher":7,"./game":11,"./utils":17}],10:[function(require,module,exports){
+},{"./artists/gameartist":4,"./eventdispatcher":7,"./eventlogger":9,"./game":12,"./playbackdispatcher":16,"./utils":19}],11:[function(require,module,exports){
 var FieldLocation = function() {
   this.hasMine = false;
   this.dug = false;
@@ -686,7 +729,7 @@ FieldLocation.prototype.reset = function() {
 
 module.exports = FieldLocation;
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 var utils = require('./utils');
 var MineField = require('./minefield');
 var Cursor = require('./cursor');
@@ -791,6 +834,9 @@ Game.prototype.bindEvents = function(dispatcher) {
       self.field.detonateMines();
       self.fire('detonated');
       self.state = 'detonated';
+      self.fire('gameOver', {
+        score: self.score.current()
+      });
     } else {
       if (spot.dig()) {
         self.fire('dig:safe');
@@ -807,7 +853,12 @@ Game.prototype.bindEvents = function(dispatcher) {
   });
 
   dispatcher.on('flag', function() {
+    if (!self.canPlay()) { return; }
     var spot = self.field.get(self.cursor.x, self.cursor.y);
+    if (spot.dug) {
+      return;
+    }
+
     spot.flag();
 
     if (spot.flagged) {
@@ -824,7 +875,7 @@ Game.prototype.bindEvents = function(dispatcher) {
 
 module.exports = Game;
 
-},{"./cursor":6,"./eventhandler":8,"./level":12,"./minefield":13,"./score":15,"./utils":17}],12:[function(require,module,exports){
+},{"./cursor":6,"./eventhandler":8,"./level":13,"./minefield":14,"./score":17,"./utils":19}],13:[function(require,module,exports){
 var MinePlacer = require('./mineplacer');
 var utils = require('./utils');
 
@@ -902,7 +953,7 @@ Level.prototype.setMines = function() {
 
 module.exports = Level;
 
-},{"./mineplacer":14,"./utils":17}],13:[function(require,module,exports){
+},{"./mineplacer":15,"./utils":19}],14:[function(require,module,exports){
 var extend = require('./utils').extend;
 var FieldLocation = require('./fieldlocation');
 
@@ -1024,7 +1075,7 @@ MineField.prototype.reset = function() {
 
 module.exports = MineField;
 
-},{"./fieldlocation":10,"./utils":17}],14:[function(require,module,exports){
+},{"./fieldlocation":11,"./utils":19}],15:[function(require,module,exports){
 var MinePlacer = function() {
 };
 
@@ -1064,7 +1115,40 @@ MinePlacer.prototype.totalPlacableMines = function( field ) {
 
 module.exports = MinePlacer;
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
+var utils = require('./utils');
+var EventHandler = require('./eventhandler');
+
+var PlaybackDispatcher = function(options) {
+  utils.requireOptions(options, 'events');
+  this.events = options.events;
+  this.current = 0;
+};
+
+EventHandler.extend(PlaybackDispatcher);
+
+
+var playNext = function() {
+  var self = this;
+  var events = self.events;
+  var current = self.current;
+
+  console.log('playing back', events[current].event);
+  self.fire(events[current].event);
+  if (events[current+1]) {
+    setTimeout(playNext.bind(self), events[current+1].time - events[current].time);
+    self.current++;
+  }
+};
+
+PlaybackDispatcher.prototype.start = function() {
+  setTimeout(playNext.bind(this), 0);
+
+};
+
+module.exports = PlaybackDispatcher;
+
+},{"./eventhandler":8,"./utils":19}],17:[function(require,module,exports){
 var Timer = require('./timer');
 
 var Score = function(game) {
@@ -1124,7 +1208,7 @@ Score.prototype.resetGame = function() {
 
 module.exports = Score;
 
-},{"./timer":16}],16:[function(require,module,exports){
+},{"./timer":18}],18:[function(require,module,exports){
 var Timer = function(interval) {
   this.interval = interval;
   this.eventHandlers = {};
@@ -1165,7 +1249,7 @@ Timer.prototype.stop = function() {
 
 module.exports = Timer;
 
-},{}],17:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 /**
  * Extends an object, copying properties from right to left
  * @param  {Object} objectsN N objects to copy
@@ -1221,4 +1305,4 @@ module.exports = {
 };
 
 
-},{}]},{},[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]);
+},{}]},{},[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]);

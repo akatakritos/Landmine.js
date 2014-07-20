@@ -62,11 +62,12 @@ describe('Game', function() {
         });
       });
 
-      it('fires a gameOver event and passes the score', function() {
+      it('fires a game:over event and passes the score and the level', function() {
         var fired = false;
-        game.on('gameOver', function(data) {
+        game.on('game:over', function(data) {
           fired = true;
           assert(typeof data.score !== 'undefined', 'did not pass the score');
+          assert(typeof data.level !== 'undefined', 'did not pass the level');
         });
 
         helpers.digAMine(game, events);
